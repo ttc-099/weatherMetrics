@@ -1,4 +1,4 @@
-[+] Starting at Mon, Nov 24, 2025  5:53:12 PM
+[+] Starting at Tue, Nov 25, 2025  2:22:30 PM
 [+] Running scraper...
 [+] Fetching HTML...
 [+] Extracting weather data...
@@ -6,18 +6,41 @@
 Location:           Sultan Abdul Aziz Shah-Subang
 State:              Kuala Lumpur
 Country:            Malaysia
-Current Time:       24 Nov 2025, 17:53:12.
-Latest Report:      24 Nov 2025, 17:00.
-Current Temp:       27 °C
-Feels Like:         31 °C
+Current Time:       25 Nov 2025, 14:22:31.
+Latest Report:      25 Nov 2025, 14:00.
+Current Temp:       31 °C
+Feels Like:         37 °C
 Forecast High:      30 °C
 Forecast Low:       24 °C
-Humidity:           89%
+Humidity:           66%
 mysql: [Warning] Using a password on the command line interface can be insecure.
 [✓] Done! Weather data inserted into tables successfully.
 [+] Running plotter...
-[+] Fetching weather data from MySQL...
+[+] Generating 10 weather plots...
+  Generating Plot 1: Current Temp vs Time...
 mysql: [Warning] Using a password on the command line interface can be insecure.
-[+] Generating weather plot...
-[✓] Weather plot generated: ../plots/weather_plot.png
-[+] Finished at Mon, Nov 24, 2025  5:53:19 PM
+ Data sample:
+2025-11-24 13:24:03	25
+2025-11-24 14:26:15	27
+2025-11-24 15:34:42	26
+  Generating Plot 2: Current vs Feels Like...
+mysql: [Warning] Using a password on the command line interface can be insecure.
+Generating Plot 3: Humidity & Temp Over Time...
+mysql: [Warning] Using a password on the command line interface can be insecure.
+  Generating Plot 4: Humidity vs Time...
+mysql: [Warning] Using a password on the command line interface can be insecure.
+  Generating Plot 5: Temperature Histogram...
+mysql: [Warning] Using a password on the command line interface can be insecure.
+  Generating Plot 6: Scraping Success...
+mysql: [Warning] Using a password on the command line interface can be insecure.
+  Generating Plot 7: Daily Temp Range...
+mysql: [Warning] Using a password on the command line interface can be insecure.
+  Generating Plot 8: Data Collection Density ...
+mysql: [Warning] Using a password on the command line interface can be insecure.
+  Generating Plot 9: High vs Low vs Feels Like...
+mysql: [Warning] Using a password on the command line interface can be insecure.
+  Generating Plot 10: Weather Classification...
+mysql: [Warning] Using a password on the command line interface can be insecure.
+[✓] All 10 plots generated in ../plots
+[✓] Data files saved in ../data/logs/plot-data-files
+[+] Finished at Tue, Nov 25, 2025  2:22:38 PM

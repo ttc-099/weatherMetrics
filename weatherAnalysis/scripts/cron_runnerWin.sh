@@ -15,9 +15,9 @@ else
 fi
 
 # Run plotter
-if [ -f "$SCRIPT_DIR/weather_plotter.sh" ]; then
+if [ -f "$SCRIPT_DIR/weather_plotterTrue.sh" ]; then
     echo "[+] Running plotter..." >> "$LOG_FILE"
-    bash "$SCRIPT_DIR/weather_plotter.sh" >> "$LOG_FILE" 2>&1
+    bash "$SCRIPT_DIR/weather_plotterTrue.sh" >> "$LOG_FILE" 2>&1
 else
     echo "[✗] Plotter not found" >> "$LOG_FILE"
 fi
