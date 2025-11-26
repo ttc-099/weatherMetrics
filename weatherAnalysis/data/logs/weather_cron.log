@@ -1,4 +1,4 @@
-[+] Starting at Tue, Nov 25, 2025  2:22:30 PM
+[+] Starting at Wed Nov 26 09:59:55 +08 2025
 [+] Running scraper...
 [+] Fetching HTML...
 [+] Extracting weather data...
@@ -6,23 +6,26 @@
 Location:           Sultan Abdul Aziz Shah-Subang
 State:              Kuala Lumpur
 Country:            Malaysia
-Current Time:       25 Nov 2025, 14:22:31.
-Latest Report:      25 Nov 2025, 14:00.
-Current Temp:       31 °C
-Feels Like:         37 °C
-Forecast High:      30 °C
-Forecast Low:       24 °C
-Humidity:           66%
+Current Time:       26 Nov 2025, 9:59:56.
+Latest Report:      26 Nov 2025, 9:00.
+Current Temp:       28 °C
+Feels Like:         31 °C
+Forecast High:      32 °C
+Forecast Low:       25 °C
+Humidity:           74%
 mysql: [Warning] Using a password on the command line interface can be insecure.
 [✓] Done! Weather data inserted into tables successfully.
 [+] Running plotter...
 [+] Generating 10 weather plots...
+Project Root: /mnt/c/Users/User/OneDrive/Desktop/dataManagement/sem1Project/weatherAnalysis
+Plots Dir: /mnt/c/Users/User/OneDrive/Desktop/dataManagement/sem1Project/weatherAnalysis/plots
+Data Dir: /mnt/c/Users/User/OneDrive/Desktop/dataManagement/sem1Project/weatherAnalysis/data/logs/plot-data-files
   Generating Plot 1: Current Temp vs Time...
 mysql: [Warning] Using a password on the command line interface can be insecure.
  Data sample:
-2025-11-24 13:24:03	25
-2025-11-24 14:26:15	27
-2025-11-24 15:34:42	26
+2025-11-25 15:56:34	29
+2025-11-25 16:00:03	29
+2025-11-25 17:00:03	27
   Generating Plot 2: Current vs Feels Like...
 mysql: [Warning] Using a password on the command line interface can be insecure.
 Generating Plot 3: Humidity & Temp Over Time...
@@ -33,7 +36,7 @@ mysql: [Warning] Using a password on the command line interface can be insecure.
 mysql: [Warning] Using a password on the command line interface can be insecure.
   Generating Plot 6: Scraping Success...
 mysql: [Warning] Using a password on the command line interface can be insecure.
-  Generating Plot 7: Daily Temp Range...
+  Generating Plot 7: Daily Temp Range (Lines)...
 mysql: [Warning] Using a password on the command line interface can be insecure.
   Generating Plot 8: Data Collection Density ...
 mysql: [Warning] Using a password on the command line interface can be insecure.
@@ -41,6 +44,36 @@ mysql: [Warning] Using a password on the command line interface can be insecure.
 mysql: [Warning] Using a password on the command line interface can be insecure.
   Generating Plot 10: Weather Classification...
 mysql: [Warning] Using a password on the command line interface can be insecure.
-[✓] All 10 plots generated in ../plots
-[✓] Data files saved in ../data/logs/plot-data-files
-[+] Finished at Tue, Nov 25, 2025  2:22:38 PM
+[✓] All 10 plots generated in /mnt/c/Users/User/OneDrive/Desktop/dataManagement/sem1Project/weatherAnalysis/plots
+[✓] Data files saved in /mnt/c/Users/User/OneDrive/Desktop/dataManagement/sem1Project/weatherAnalysis/data/logs/plot-data-files
+[+] Finished at Wed Nov 26 09:59:58 +08 2025
+[+] Fetching HTML...
+[+] Extracting weather data...
+--- WEATHER DATA ---
+Location:           Sultan Abdul Aziz Shah-Subang
+State:              Kuala Lumpur
+Country:            Malaysia
+Current Time:       26 Nov 2025, 10:00:04.
+Latest Report:      26 Nov 2025, 9:00.
+Current Temp:       28 °C
+Feels Like:         31 °C
+Forecast High:      32 °C
+Forecast Low:       25 °C
+Humidity:           74%
+mysql: [Warning] Using a password on the command line interface can be insecure.
+[✓] Done! Weather data inserted into tables successfully.
+[+] Fetching HTML...
+[+] Extracting weather data...
+--- WEATHER DATA ---
+Location:           Sultan Abdul Aziz Shah-Subang
+State:              Kuala Lumpur
+Country:            Malaysia
+Current Time:       26 Nov 2025, 11:00:05.
+Latest Report:      26 Nov 2025, 10:00.
+Current Temp:       30 °C
+Feels Like:         33 °C
+Forecast High:      32 °C
+Forecast Low:       25 °C
+Humidity:           62%
+mysql: [Warning] Using a password on the command line interface can be insecure.
+[✓] Done! Weather data inserted into tables successfully.

@@ -6,12 +6,22 @@
 MYSQL_USER="root"
 MYSQL_PASS="NiNoFan28"
 MYSQL_DB="weatherDB"
-PLOTS_DIR="../plots"
-DATA_DIR="../data/logs/plot-data-files"
+
+# Get the correct project directory
+SCRIPT_DIR="$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd)"
+PROJECT_ROOT="$(cd "$SCRIPT_DIR/.." && pwd)"
+PLOTS_DIR="$PROJECT_ROOT/plots"
+DATA_DIR="$PROJECT_ROOT/data/logs/plot-data-files"
+
+# Ensure we're in the right directory
+cd "$PROJECT_ROOT"
 
 mkdir -p "$PLOTS_DIR" "$DATA_DIR"
 
 echo "[+] Generating 10 weather plots..."
+echo "Project Root: $PROJECT_ROOT"
+echo "Plots Dir: $PLOTS_DIR"
+echo "Data Dir: $DATA_DIR"
 
 # ------------------------------
 # 1. CURRENT TEMP VS TIME
@@ -166,12 +176,14 @@ plot "$DATA_DIR/plot6_data.dat" using 2:xtic(1) lt rgb "#FF6B6B" title "Count"
 EOF
 
 # ------------------------------
-# 7. DAILY TEMP RANGE
+# 7. DAILY TEMP RANGE (Line Plot)
 # ------------------------------
-echo "  Generating Plot 7: Daily Temp Range..."
+echo "  Generating Plot 7: Daily Temp Range (Lines)..."
 mysql -u "$MYSQL_USER" -p"$MYSQL_PASS" -D "$MYSQL_DB" -N -e \
 "SELECT DATE(observation_time) AS date, \
-       MIN(current_temp), MAX(current_temp), AVG(current_temp) \
+       MIN(current_temp) AS min_temp, \
+       MAX(current_temp) AS max_temp, \
+       AVG(current_temp) AS avg_temp \
  FROM observations \
  WHERE current_temp IS NOT NULL \
  GROUP BY DATE(observation_time) \
@@ -188,9 +200,12 @@ set datafile separator "\t"
 set xdata time
 set timefmt "%Y-%m-%d"
 set format x "%d-%m"
-plot "$DATA_DIR/plot7_data.dat" using 1:2 with linespoints lw 2 lt rgb "blue" pt 7 ps 1.0 title "Min", \
-"$DATA_DIR/plot7_data.dat" using 1:3 with linespoints lw 2 lt rgb "red" pt 5 ps 1.0 title "Max", \
-"$DATA_DIR/plot7_data.dat" using 1:4 with linespoints lw 2 lt rgb "green" pt 9 ps 1.0 title "Avg"
+set xtics rotate by -45
+
+# Plot min, max, and avg as lines
+plot "$DATA_DIR/plot7_data.dat" using 1:2 with linespoints lw 2 lt rgb "blue" pt 7 title "Min Temp", \
+     "$DATA_DIR/plot7_data.dat" using 1:3 with linespoints lw 2 lt rgb "red" pt 7 title "Max Temp", \
+     "$DATA_DIR/plot7_data.dat" using 1:4 with linespoints lw 2 lt rgb "green" pt 7 title "Avg Temp"
 EOF
 
 # ------------------------------

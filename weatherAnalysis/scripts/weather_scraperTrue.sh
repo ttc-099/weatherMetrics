@@ -1,5 +1,13 @@
 #!/bin/bash
 
+# -----------------------------------------
+# FORCE SCRIPT TO RUN FROM ITS OWN DIRECTORY
+# -----------------------------------------
+cd "$(dirname "$0")" || exit 1
+
+# -----------------------------------------
+# CONFIG / URL
+# -----------------------------------------
 URL="https://www.timeanddate.com/weather/malaysia/kuala-lumpur"
 OUTPUT="../data/raw_html/weather_kualalumpur.html"
 
@@ -9,6 +17,8 @@ curl -s -A "Mozilla/5.0" "$URL" -o "$OUTPUT"
 # -----------------------------------------
 # PARSING FUNCTIONS
 # -----------------------------------------
+unset LC_ALL
+unset LANG
 
 HTML="$OUTPUT"
 
@@ -42,11 +52,9 @@ HUMIDITY="${HUMIDITY%</td>}"   # remove </td>
 STATE=$(grep -oP '(?<=&amp;state=)[^&]+' "$HTML" | sed 's/%20/ /g')
 COUNTRY=$(grep -oP '(?<=&amp;country=)[^&]+' "$HTML" | sed 's/%20/ /g')
 
-
 # -----------------------------------------
 # OUTPUT
 # -----------------------------------------
-
 echo "--- WEATHER DATA ---"
 echo "Location:           $LOCATION"
 echo "State:              $STATE"
@@ -62,7 +70,6 @@ echo "Humidity:           ${HUMIDITY}%"
 # -----------------------------------------
 # MYSQL INSERTION 
 # -----------------------------------------
-
 MYSQL_USER="root"
 MYSQL_PASS="NiNoFan28"
 MYSQL_DB="weatherDB"
@@ -80,8 +87,8 @@ CLEAN_LATEST_REPORT=$(echo "$LATEST_REPORT" | tr -d ',' | tr -d '.')
 CURR_TIME_SQL=$(date -d "$CLEAN_CURRENT_TIME" +"%Y-%m-%d %H:%M:%S")
 LATEST_REPORT_SQL=$(date -d "$CLEAN_LATEST_REPORT" +"%Y-%m-%d %H:%M:%S")
 
-# Execute SQL statements in a transaction for safety
-mysql -u "$MYSQL_USER" -p"$MYSQL_PASS" -D "$MYSQL_DB" <<EOF
+# Execute SQL statements in a transaction for safety using TCP to connect to Windows MySQL
+mysql -h 127.0.0.1 -P 3306 -u "$MYSQL_USER" -p"$MYSQL_PASS" -D "$MYSQL_DB" <<EOF
 START TRANSACTION;
 
 -- Insert location if not exists
