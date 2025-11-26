@@ -1,0 +1,45 @@
+[+] Fetching HTML...
+[+] Extracting weather data...
+--- WEATHER DATA ---
+Location:           Sultan Abdul Aziz Shah-Subang
+State:              Kuala Lumpur
+Country:            Malaysia
+Current Time:       26 Nov 2025, 15:00:06.
+Latest Report:      26 Nov 2025, 14:00.
+Current Temp:       33 °C
+Feels Like:         38 °C
+Forecast High:      31 °C
+Forecast Low:       25 °C
+Humidity:           56%
+mysql: [Warning] Using a password on the command line interface can be insecure.
+[✓] Done! Weather data inserted into tables successfully.
+[+] Fetching HTML...
+[+] Extracting weather data...
+--- WEATHER DATA ---
+Location:           Sultan Abdul Aziz Shah-Subang
+State:              Kuala Lumpur
+Country:            Malaysia
+Current Time:       26 Nov 2025, 16:00:05.
+Latest Report:      26 Nov 2025, 15:00.
+Current Temp:       33 °C
+Feels Like:         38 °C
+Forecast High:      31 °C
+Forecast Low:       25 °C
+Humidity:           56%
+mysql: [Warning] Using a password on the command line interface can be insecure.
+[✓] Done! Weather data inserted into tables successfully.
+[+] Fetching HTML...
+[+] Extracting weather data...
+--- WEATHER DATA ---
+Location:           Sultan Abdul Aziz Shah-Subang
+State:              Kuala Lumpur
+Country:            Malaysia
+Current Time:       26 Nov 2025, 23:00:05.
+Latest Report:      26 Nov 2025, 22:00.
+Current Temp:       30 °C
+Feels Like:         34 °C
+Forecast High:      31 °C
+Forecast Low:       24 °C
+Humidity:           66%
+mysql: [Warning] Using a password on the command line interface can be insecure.
+[✓] Done! Weather data inserted into tables successfully.
