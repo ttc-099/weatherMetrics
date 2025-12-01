@@ -82,10 +82,15 @@ FORECAST_LOW=$(echo "$FORECAST_LOW" | tr -dc '0-9')
 HUMIDITY=$(echo "$HUMIDITY" | tr -dc '0-9')
 
 # Clean times
-CLEAN_CURRENT_TIME=$(echo "$CURRENT_TIME" | tr -d ',' | tr -d '.')
-CLEAN_LATEST_REPORT=$(echo "$LATEST_REPORT" | tr -d ',' | tr -d '.')
-CURR_TIME_SQL=$(date -d "$CLEAN_CURRENT_TIME" +"%Y-%m-%d %H:%M:%S")
-LATEST_REPORT_SQL=$(date -d "$CLEAN_LATEST_REPORT" +"%Y-%m-%d %H:%M:%S")
+CLEAN_CURRENT_TIME_FIXED=$(echo "$CLEAN_CURRENT_TIME" \
+    | sed 's/Jan/Jan/g; s/Feb/Feb/g; s/Mar/Mar/g; s/Mac/Mar/g; s/Apr/Apr/g; s/Mei/May/g; s/Jun/Jun/g; s/Jul/Jul/g; s/Ogos/Aug/g; s/Sep/Sep/g; s/Okt/Oct/g; s/Nov/Nov/g; s/Dis/Dec/g')
+
+CLEAN_LATEST_REPORT_FIXED=$(echo "$CLEAN_LATEST_REPORT" \
+    | sed 's/Jan/Jan/g; s/Feb/Feb/g; s/Mar/Mar/g; s/Mac/Mar/g; s/Apr/Apr/g; s/Mei/May/g; s/Jun/Jun/g; s/Jul/Jul/g; s/Ogos/Aug/g; s/Sep/Sep/g; s/Okt/Oct/g; s/Nov/Nov/g; s/Dis/Dec/g')
+
+# Convert to MySQL datetime using English locale
+CURR_TIME_SQL=$(LC_ALL=en_US.UTF-8 date -d "$CLEAN_CURRENT_TIME_FIXED" +"%Y-%m-%d %H:%M:%S")
+LATEST_REPORT_SQL=$(LC_ALL=en_US.UTF-8 date -d "$CLEAN_LATEST_REPORT_FIXED" +"%Y-%m-%d %H:%M:%S")
 
 # Execute SQL statements in a transaction for safety using TCP to connect to Windows MySQL
 mysql -h 127.0.0.1 -P 3306 -u "$MYSQL_USER" -p"$MYSQL_PASS" -D "$MYSQL_DB" <<EOF
