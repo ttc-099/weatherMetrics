@@ -46,14 +46,14 @@ FORECAST_LOW=$(echo "$FORECAST" | awk '{print $3}')
 
 # Humidity
 HUMIDITY=$(grep -oP '(?<=<th>Humidity: </th><td>)[0-9]+(?=%)' "$HTML")
-HUMIDITY="${HUMIDITY%</td>}"   # remove </td>
+HUMIDITY="${HUMIDITY%</td>}"
 
-# State and country from og:image meta
+# State and country
 STATE=$(grep -oP '(?<=&amp;state=)[^&]+' "$HTML" | sed 's/%20/ /g')
 COUNTRY=$(grep -oP '(?<=&amp;country=)[^&]+' "$HTML" | sed 's/%20/ /g')
 
 # -----------------------------------------
-# OUTPUT
+# OUTPUT (DEBUG)
 # -----------------------------------------
 echo "--- WEATHER DATA ---"
 echo "Location:           $LOCATION"
@@ -81,46 +81,48 @@ FORECAST_HIGH=$(echo "$FORECAST_HIGH" | tr -dc '0-9')
 FORECAST_LOW=$(echo "$FORECAST_LOW" | tr -dc '0-9')
 HUMIDITY=$(echo "$HUMIDITY" | tr -dc '0-9')
 
-# Clean times
+# -----------------------------------------
+# FIXED TIME CLEANING SECTION
+# -----------------------------------------
+
+# 1. Assign variables properly
+CLEAN_CURRENT_TIME="$CURRENT_TIME"
+CLEAN_LATEST_REPORT="$LATEST_REPORT"
+
+# 2. Remove comma, trailing dot, and replace Malaysian month names with English
 CLEAN_CURRENT_TIME_FIXED=$(echo "$CLEAN_CURRENT_TIME" \
-    | sed 's/Jan/Jan/g; s/Feb/Feb/g; s/Mar/Mar/g; s/Mac/Mar/g; s/Apr/Apr/g; s/Mei/May/g; s/Jun/Jun/g; s/Jul/Jul/g; s/Ogos/Aug/g; s/Sep/Sep/g; s/Okt/Oct/g; s/Nov/Nov/g; s/Dis/Dec/g')
+    | sed 's/,//g; s/\.$//; s/Mac/Mar/g; s/Mei/May/g; s/Ogos/Aug/g; s/Okt/Oct/g; s/Dis/Dec/g')
 
 CLEAN_LATEST_REPORT_FIXED=$(echo "$CLEAN_LATEST_REPORT" \
-    | sed 's/Jan/Jan/g; s/Feb/Feb/g; s/Mar/Mar/g; s/Mac/Mar/g; s/Apr/Apr/g; s/Mei/May/g; s/Jun/Jun/g; s/Jul/Jul/g; s/Ogos/Aug/g; s/Sep/Sep/g; s/Okt/Oct/g; s/Nov/Nov/g; s/Dis/Dec/g')
+    | sed 's/,//g; s/\.$//; s/Mac/Mar/g; s/Mei/May/g; s/Ogos/Aug/g; s/Okt/Oct/g; s/Dis/Dec/g')
 
-# Convert to MySQL datetime using English locale
+# 3. Convert cleaned time to MySQL datetime
 CURR_TIME_SQL=$(LC_ALL=en_US.UTF-8 date -d "$CLEAN_CURRENT_TIME_FIXED" +"%Y-%m-%d %H:%M:%S")
 LATEST_REPORT_SQL=$(LC_ALL=en_US.UTF-8 date -d "$CLEAN_LATEST_REPORT_FIXED" +"%Y-%m-%d %H:%M:%S")
 
-# Execute SQL statements in a transaction for safety using TCP to connect to Windows MySQL
+# -----------------------------------------
+# MYSQL INSERT EXECUTION
+# -----------------------------------------
 mysql -h 127.0.0.1 -P 3306 -u "$MYSQL_USER" -p"$MYSQL_PASS" -D "$MYSQL_DB" <<EOF
 START TRANSACTION;
 
--- Insert location if not exists
 INSERT INTO locations (name, state, country)
 SELECT '$LOCATION', '$STATE', '$COUNTRY'
-WHERE NOT EXISTS (
-    SELECT 1 FROM locations WHERE name='$LOCATION'
-);
+WHERE NOT EXISTS (SELECT 1 FROM locations WHERE name='$LOCATION');
 
--- Get location_id
 SET @loc_id = (SELECT location_id FROM locations WHERE name='$LOCATION');
 
--- Insert scrape log
 INSERT INTO scrape_logs (location_id, scraped_at, status)
 VALUES (@loc_id, NOW(), 'SUCCESS');
 
--- Get scrape_id
 SET @scrape_id = LAST_INSERT_ID();
 
--- Insert observation
 INSERT INTO observations (
     location_id, scrape_id, observation_time, current_temp, feels_like, humidity, created_at
 ) VALUES (
     @loc_id, @scrape_id, '$CURR_TIME_SQL', $CURRENT_TEMP, $FEELS_LIKE, $HUMIDITY, NOW()
 );
 
--- Insert forecast
 INSERT INTO forecasts (
     location_id, scrape_id, high_temp, low_temp
 ) VALUES (
