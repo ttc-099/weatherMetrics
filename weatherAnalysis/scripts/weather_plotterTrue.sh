@@ -3,9 +3,12 @@
 # ------------------------------
 # CONFIG
 # ------------------------------
-MYSQL_USER="root"
-MYSQL_PASS="NiNoFan28"
-MYSQL_DB="weatherDB"
+
+set -o allexport
+
+source ../.env 2>/dev/null
+
+set -o +o allexport
 
 # Get the correct project directory
 SCRIPT_DIR="$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd)"
