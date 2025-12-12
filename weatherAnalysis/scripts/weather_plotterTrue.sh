@@ -1,20 +1,72 @@
 #!/bin/bash
 
-# ------------------------------
-# CONFIG
-# ------------------------------
+# --- CONFIGURATION / ENVIRONMENT VARIABLE READING ---
+# We will use variables sourced from the .env file.
+if [ -f ../../.env ]; then # <--- THE CRITICAL CHANGE IS HERE: ../../.env
+    echo "[*] Sourcing environment variables from the project root (../../.env)"
+    set -a # Automatically export all following variable assignments
+    source ../../.env # <--- Updated the path to two levels up
+    set +a # Turn off auto-export
+fi
 
-set -o allexport
+# Read Configuration from Environment Variables (set by 'source .env')
+# Use defaults if variables are not set (e.g., if .env was forgotten)
+MYSQL_HOST="${DB_HOST:-127.0.0.1}"
+MYSQL_USER="${DB_USER:-root}"
+MYSQL_DB="${DB_NAME:-weatherDB}"
 
-source ../.env 2>/dev/null
+# 2. Force the password to be loaded from the environment (DB_PASSWORD)
+#    If the environment variable is NOT set, the script will EXIT with an error.
+if [ -z "$DB_PASSWORD" ]; then
+    echo "[!] ERROR: DB_PASSWORD environment variable is not set." >&2
+    echo "Please source your .env file." >&2
+    exit 1
+fi
+MYSQL_PASS="$DB_PASSWORD"
 
-set -o +o allexport
-
-# Get the correct project directory
+# Get the correct project directory (moved up for use in cleanup function)
 SCRIPT_DIR="$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd)"
 PROJECT_ROOT="$(cd "$SCRIPT_DIR/.." && pwd)"
 PLOTS_DIR="$PROJECT_ROOT/plots"
 DATA_DIR="$PROJECT_ROOT/data/logs/plot-data-files"
+
+# --- SECURE CONNECTION SETUP ---
+
+# 1. Define a temporary file path
+MY_CNF_FILE=$(mktemp)
+
+# 2. Define a cleanup function
+cleanup() {
+    # This function is ONLY responsible for deleting the secure config file.
+    if [ -f "$MY_CNF_FILE" ]; then
+        rm -f "$MY_CNF_FILE"
+        echo "[✓] Temporary MySQL configuration file deleted."
+    fi
+}
+
+# 3. Trap signals (EXIT, INT, TERM) to ensure cleanup runs automatically
+trap cleanup EXIT INT TERM
+
+# 4. Write the credentials to the temporary file
+cat > "$MY_CNF_FILE" << EOF
+[client]
+host=$MYSQL_HOST
+user=$MYSQL_USER
+password=$MYSQL_PASS
+database=$MYSQL_DB
+EOF
+
+# 5. Ensure the file has restricted permissions (only accessible by owner)
+chmod 600 "$MY_CNF_FILE"
+
+# --- END SECURE CONNECTION SETUP ---
+
+
+echo "[!] Using DB Credentials:"
+echo "Host: $MYSQL_HOST"
+echo "User: $MYSQL_USER"
+echo "DB: $MYSQL_DB"
+echo "--------------------------"
 
 # Ensure we're in the right directory
 cd "$PROJECT_ROOT"
@@ -29,13 +81,13 @@ echo "Data Dir: $DATA_DIR"
 # ------------------------------
 # 1. CURRENT TEMP VS TIME
 # ------------------------------
-echo "  Generating Plot 1: Current Temp vs Time..."
+echo "Generating Plot 1: Current Temp vs Time..."
 
-mysql -u "$MYSQL_USER" -p"$MYSQL_PASS" -D "$MYSQL_DB" -N -e \
+mysql --defaults-file="$MY_CNF_FILE" -N -e \
 "SELECT DATE_FORMAT(observation_time, '%Y-%m-%d %H:%i:%s') AS ts, current_temp \
- FROM observations \
- WHERE current_temp IS NOT NULL \
- ORDER BY observation_time;" > "$DATA_DIR/plot1_data.dat"
+FROM observations \
+WHERE current_temp IS NOT NULL \
+ORDER BY observation_time;" > "$DATA_DIR/plot1_data.dat"
 
 echo " Data sample:"
 head -n 3 "$DATA_DIR/plot1_data.dat"
@@ -58,12 +110,12 @@ EOF
 # ------------------------------
 # 2. CURRENT VS FEELS LIKE
 # ------------------------------
-echo "  Generating Plot 2: Current vs Feels Like..."
-mysql -u "$MYSQL_USER" -p"$MYSQL_PASS" -D "$MYSQL_DB" -N -e \
+echo "Generating Plot 2: Current vs Feels Like..."
+mysql --defaults-file="$MY_CNF_FILE" -N -e \
 "SELECT CONCAT(DATE(observation_time),' ',TIME(observation_time)) AS ts, current_temp, feels_like \
- FROM observations \
- WHERE current_temp IS NOT NULL AND feels_like IS NOT NULL \
- ORDER BY observation_time;" > "$DATA_DIR/plot2_data.dat"
+FROM observations \
+WHERE current_temp IS NOT NULL AND feels_like IS NOT NULL \
+ORDER BY observation_time;" > "$DATA_DIR/plot2_data.dat"
 
 gnuplot <<EOF
 set terminal pngcairo size 1000,600 enhanced font 'Verdana,10'
@@ -84,7 +136,7 @@ EOF
 # 3. HUMIDITY-TEMP MAP
 # ------------------------------
 echo "Generating Plot 3: Humidity & Temp Over Time..."
-mysql -u "$MYSQL_USER" -p"$MYSQL_PASS" -D "$MYSQL_DB" -N -e \
+mysql --defaults-file="$MY_CNF_FILE" -N -e \
 "SELECT DATE_FORMAT(observation_time, '%Y-%m-%d %H:%i:%s') AS ts, current_temp, humidity \
 FROM observations \
 WHERE current_temp IS NOT NULL AND humidity IS NOT NULL \
@@ -106,18 +158,18 @@ set timefmt "%Y-%m-%d %H:%M:%S"
 set format x "%H:%M\n%d-%m"
 set xtics rotate by -45
 plot "$DATA_DIR/plot3_data.dat" using 1:2 with linespoints lw 2 lt rgb "blue" pt 7 ps 1.0 title "Temperature (Y1)", \
-     "$DATA_DIR/plot3_data.dat" using 1:3 axes x1y2 with linespoints lw 2 lt rgb "red" pt 5 ps 1.0 title "Humidity (Y2)"
+"$DATA_DIR/plot3_data.dat" using 1:3 axes x1y2 with linespoints lw 2 lt rgb "red" pt 5 ps 1.0 title "Humidity (Y2)"
 EOF
 
 # ------------------------------
 # 4. HUMIDITY VS TIME
 # ------------------------------
-echo "  Generating Plot 4: Humidity vs Time..."
-mysql -u "$MYSQL_USER" -p"$MYSQL_PASS" -D "$MYSQL_DB" -N -e \
+echo "Generating Plot 4: Humidity vs Time..."
+mysql --defaults-file="$MY_CNF_FILE" -N -e \
 "SELECT CONCAT(DATE(observation_time),' ',TIME(observation_time)) AS ts, humidity \
- FROM observations \
- WHERE humidity IS NOT NULL \
- ORDER BY observation_time;" > "$DATA_DIR/plot4_data.dat"
+FROM observations \
+WHERE humidity IS NOT NULL \
+ORDER BY observation_time;" > "$DATA_DIR/plot4_data.dat"
 
 gnuplot <<EOF
 set terminal pngcairo size 1000,600 enhanced font 'Verdana,10'
@@ -136,13 +188,13 @@ EOF
 # ------------------------------
 # 5. TEMPERATURE HISTOGRAM
 # ------------------------------
-echo "  Generating Plot 5: Temperature Histogram..."
-mysql -u "$MYSQL_USER" -p"$MYSQL_PASS" -D "$MYSQL_DB" -N -e \
+echo "Generating Plot 5: Temperature Histogram..."
+mysql --defaults-file="$MY_CNF_FILE" -N -e \
 "SELECT ROUND(current_temp) as temp, COUNT(*) as frequency \
- FROM observations \
- WHERE current_temp IS NOT NULL \
- GROUP BY temp \
- ORDER BY temp;" > "$DATA_DIR/plot5_data.dat"
+FROM observations \
+WHERE current_temp IS NOT NULL \
+GROUP BY temp \
+ORDER BY temp;" > "$DATA_DIR/plot5_data.dat"
 
 gnuplot <<EOF
 set terminal pngcairo size 800,600 enhanced font 'Verdana,10'
@@ -159,11 +211,11 @@ EOF
 # ------------------------------
 # 6. SCRAPING SUCCESS
 # ------------------------------
-echo "  Generating Plot 6: Scraping Success..."
-mysql -u "$MYSQL_USER" -p"$MYSQL_PASS" -D "$MYSQL_DB" -N -e \
+echo "Generating Plot 6: Scraping Success..."
+mysql --defaults-file="$MY_CNF_FILE" -N -e \
 "SELECT status, COUNT(*) as count \
- FROM scrape_logs \
- GROUP BY status;" > "$DATA_DIR/plot6_data.dat"
+FROM scrape_logs \
+GROUP BY status;" > "$DATA_DIR/plot6_data.dat"
 
 gnuplot <<EOF
 set terminal pngcairo size 800,600 enhanced font 'Verdana,10'
@@ -181,16 +233,16 @@ EOF
 # ------------------------------
 # 7. DAILY TEMP RANGE (Line Plot)
 # ------------------------------
-echo "  Generating Plot 7: Daily Temp Range (Lines)..."
-mysql -u "$MYSQL_USER" -p"$MYSQL_PASS" -D "$MYSQL_DB" -N -e \
+echo "Generating Plot 7: Daily Temp Range (Lines)..."
+mysql --defaults-file="$MY_CNF_FILE" -N -e\
 "SELECT DATE(observation_time) AS date, \
-       MIN(current_temp) AS min_temp, \
-       MAX(current_temp) AS max_temp, \
-       AVG(current_temp) AS avg_temp \
- FROM observations \
- WHERE current_temp IS NOT NULL \
- GROUP BY DATE(observation_time) \
- ORDER BY date;" > "$DATA_DIR/plot7_data.dat"
+MIN(current_temp) AS min_temp, \
+MAX(current_temp) AS max_temp, \
+AVG(current_temp) AS avg_temp \
+FROM observations \
+WHERE current_temp IS NOT NULL \
+GROUP BY DATE(observation_time) \
+ORDER BY date;" > "$DATA_DIR/plot7_data.dat"
 
 gnuplot <<EOF
 set terminal pngcairo size 1000,600 enhanced font 'Verdana,10'
@@ -204,26 +256,22 @@ set xdata time
 set timefmt "%Y-%m-%d"
 set format x "%d-%m"
 set xtics rotate by -45
-
-# Plot min, max, and avg as lines
 plot "$DATA_DIR/plot7_data.dat" using 1:2 with linespoints lw 2 lt rgb "blue" pt 7 title "Min Temp", \
-     "$DATA_DIR/plot7_data.dat" using 1:3 with linespoints lw 2 lt rgb "red" pt 7 title "Max Temp", \
-     "$DATA_DIR/plot7_data.dat" using 1:4 with linespoints lw 2 lt rgb "green" pt 7 title "Avg Temp"
+"$DATA_DIR/plot7_data.dat" using 1:3 with linespoints lw 2 lt rgb "red" pt 7 title "Max Temp", \
+"$DATA_DIR/plot7_data.dat" using 1:4 with linespoints lw 2 lt rgb "green" pt 7 title "Avg Temp"
 EOF
 
 # ------------------------------
 # 8. DATA COLLECTION DENSITY OVER TIME (BAR CHART)
 # ------------------------------
-
-echo "  Generating Plot 8: Data Collection Density ..."
-
-mysql -u "$MYSQL_USER" -p"$MYSQL_PASS" -D "$MYSQL_DB" -N -e \
+echo "Generating Plot 8: Data Collection Density ..."
+mysql --defaults-file="$MY_CNF_FILE" -N -e \
 "SELECT DATE(scraped_at) AS date,
-        COUNT(DISTINCT scrape_id) AS count_success
- FROM scrape_logs
- WHERE status = 'success'
- GROUP BY DATE(scraped_at)
- ORDER BY DATE(scraped_at);" > "$DATA_DIR/plot8_data.dat"
+COUNT(DISTINCT scrape_id) AS count_success
+FROM scrape_logs
+WHERE status = 'success'
+GROUP BY DATE(scraped_at)
+ORDER BY DATE(scraped_at);" > "$DATA_DIR/plot8_data.dat"
 
 gnuplot <<EOF
 set terminal pngcairo size 1000,600 enhanced font 'Verdana,10'
@@ -243,15 +291,15 @@ EOF
 # ------------------------------
 # 9. HIGH VS LOW VS FEELS LIKE
 # ------------------------------
-echo "  Generating Plot 9: High vs Low vs Feels Like..."
-mysql -u "$MYSQL_USER" -p"$MYSQL_PASS" -D "$MYSQL_DB" -N -e \
+echo "Generating Plot 9: High vs Low vs Feels Like..."
+mysql --defaults-file="$MY_CNF_FILE" -N -e \
 "SELECT CONCAT(DATE(s.scraped_at),' ',TIME(s.scraped_at)) AS ts, \
-       o.current_temp, o.feels_like, f.high_temp, f.low_temp \
- FROM scrape_logs s \
- JOIN observations o ON o.scrape_id = s.scrape_id \
- JOIN forecasts f   ON f.scrape_id = s.scrape_id \
- WHERE o.current_temp IS NOT NULL AND o.feels_like IS NOT NULL \
- ORDER BY s.scraped_at;" > "$DATA_DIR/plot9_data.dat"
+o.current_temp, o.feels_like, f.high_temp, f.low_temp \
+FROM scrape_logs s \
+JOIN observations o ON o.scrape_id = s.scrape_id \
+JOIN forecasts f ON f.scrape_id = s.scrape_id \
+WHERE o.current_temp IS NOT NULL AND o.feels_like IS NOT NULL \
+ORDER BY s.scraped_at;" > "$DATA_DIR/plot9_data.dat"
 
 gnuplot <<EOF
 set terminal pngcairo size 1000,600 enhanced font 'Verdana,10'
@@ -273,7 +321,7 @@ EOF
 # ------------------------------
 # 10. SIMPLE WEATHER CLASSIFICATION
 # ------------------------------
-echo "  Generating Plot 10: Weather Classification..."
+echo "Generating Plot 10: Weather Classification..."
 cat > "$DATA_DIR/plot10_simple.dat" <<EOL
 Hot 0
 Cold 0
@@ -282,19 +330,19 @@ Perfect 0
 Moderate 0
 EOL
 
-mysql -u "$MYSQL_USER" -p"$MYSQL_PASS" -D "$MYSQL_DB" -N -e \
+mysql --defaults-file="$MY_CNF_FILE" -N -e \
 "SELECT CASE \
-           WHEN current_temp > 30 THEN 'Hot' \
-           WHEN current_temp < 20 THEN 'Cold' \
-           WHEN humidity > 80 THEN 'Humid' \
-           WHEN current_temp BETWEEN 22 AND 26 THEN 'Perfect' \
-           ELSE 'Moderate' \
-       END AS class, \
-       COUNT(*) AS cnt \
- FROM observations \
- WHERE current_temp IS NOT NULL AND humidity IS NOT NULL \
- GROUP BY class;" | while read cls cnt; do
-    sed -i "s/^$cls [0-9]*/$cls $cnt/" "$DATA_DIR/plot10_simple.dat"
+WHEN current_temp > 30 THEN 'Hot' \
+WHEN current_temp < 20 THEN 'Cold' \
+WHEN humidity > 80 THEN 'Humid' \
+WHEN current_temp BETWEEN 22 AND 26 THEN 'Perfect' \
+ELSE 'Moderate' \
+END AS class, \
+COUNT(*) AS cnt \
+FROM observations \
+WHERE current_temp IS NOT NULL AND humidity IS NOT NULL \
+GROUP BY class;" | while read cls cnt; do
+sed -i "s/^$cls [0-9]*/$cls $cnt/" "$DATA_DIR/plot10_simple.dat"
 done
 
 gnuplot <<EOF

@@ -1,60 +1,111 @@
 #!/bin/bash
 
-# -----------------------------------------
-# FORCE SCRIPT TO RUN FROM ITS OWN DIRECTORY
-# -----------------------------------------
+# --- CONFIGURATION / ENVIRONMENT VARIABLE READING ---
+if [ -f ../../.env ]; then
+    echo "[*] Sourcing environment variables from the project root (../../.env)"
+    set -a
+    source ../../.env
+    set +a
+fi
+
+MYSQL_HOST="${DB_HOST:-127.0.0.1}"
+MYSQL_USER="${DB_USER:-root}"
+MYSQL_DB="${DB_NAME:-weatherDB}"
+
+if [ -z "$DB_PASSWORD" ]; then
+    echo "[!] ERROR: DB_PASSWORD environment variable is not set." >&2
+    exit 1
+fi
+MYSQL_PASS="$DB_PASSWORD"
+
+# --- SECURE MYSQL CONFIG ---
+MY_CNF_FILE=$(mktemp)
+
+cleanup() {
+    [ -f "$MY_CNF_FILE" ] && rm -f "$MY_CNF_FILE" && echo "[✓] Temporary MySQL config deleted."
+}
+trap cleanup EXIT INT TERM
+
+cat > "$MY_CNF_FILE" << EOF
+[client]
+host=$MYSQL_HOST
+user=$MYSQL_USER
+password=$MYSQL_PASS
+database=$MYSQL_DB
+EOF
+chmod 600 "$MY_CNF_FILE"
+
+# --- FORCE SCRIPT DIRECTORY ---
 cd "$(dirname "$0")" || exit 1
 
-# -----------------------------------------
-# CONFIG / URL
-# -----------------------------------------
+# --- CONFIG / URL / OUTPUT ---
 URL="https://www.timeanddate.com/weather/malaysia/kuala-lumpur"
 OUTPUT="../data/raw_html/weather_kualalumpur.html"
 
-echo "[+] Fetching HTML..."
-curl -s -A "Mozilla/5.0" "$URL" -o "$OUTPUT"
+# --- ERROR HANDLING: FETCH HTML ---
+MAX_RETRIES=3
+for i in $(seq 1 $MAX_RETRIES); do
+    curl -s -A "Mozilla/5.0" "$URL" -o "$OUTPUT" && break
+    echo "[!] Retry $i/$MAX_RETRIES..."
+    sleep 2
+done
 
-# -----------------------------------------
-# PARSING FUNCTIONS
-# -----------------------------------------
+if [ ! -s "$OUTPUT" ]; then
+    echo "[✗] Failed to fetch HTML or file is empty."
+    exit 1
+fi
+
 unset LC_ALL
 unset LANG
-
 HTML="$OUTPUT"
 
 echo "[+] Extracting weather data..."
 
-# Location
+# --- DATA PARSING ---
 LOCATION=$(grep -oP '(?<=<th>Location: </th><td>).*?(?=</td>)' "$HTML")
+LOCATION=${LOCATION:-Unknown}
 
-# Current time
 CURRENT_TIME=$(grep -oP '(?<=<th>Current Time: </th><td id=wtct>).*?(?=</td>)' "$HTML")
+CURRENT_TIME=${CURRENT_TIME:-"1970-01-01 00:00"}
 
-# Latest report
 LATEST_REPORT=$(grep -oP '(?<=<th>Latest Report: </th><td>).*?(?=</td>)' "$HTML")
+LATEST_REPORT=${LATEST_REPORT:-"1970-01-01 00:00"}
 
-# Current temperature
 CURRENT_TEMP=$(grep -oP '(?<=<div class=h2>).+?(?=</div>)' "$HTML" | sed 's/&nbsp;//' | sed 's/°C/ °C/')
+CURRENT_TEMP=${CURRENT_TEMP:-0}
 
-# Feels like temperature
 FEELS_LIKE=$(grep -oP 'Feels Like:\s*\K[0-9]+(?=&nbsp;°C)' "$HTML")
+FEELS_LIKE=${FEELS_LIKE:-0}
 
-# Forecast high/low
 FORECAST=$(grep -oP 'Forecast:\s*\K[0-9]+ / [0-9]+' "$HTML")
-FORECAST_HIGH=$(echo "$FORECAST" | awk '{print $1}')
-FORECAST_LOW=$(echo "$FORECAST" | awk '{print $3}')
+FORECAST_ARRAY=($(echo "$FORECAST" | tr -d ' ' | tr '/' ' '))
+FORECAST_HIGH=${FORECAST_ARRAY[0]:-0}
+FORECAST_LOW=${FORECAST_ARRAY[1]:-0}
 
-# Humidity
 HUMIDITY=$(grep -oP '(?<=<th>Humidity: </th><td>)[0-9]+(?=%)' "$HTML")
-HUMIDITY="${HUMIDITY%</td>}"
+HUMIDITY=${HUMIDITY:-0}
 
-# State and country
 STATE=$(grep -oP '(?<=&amp;state=)[^&]+' "$HTML" | sed 's/%20/ /g')
-COUNTRY=$(grep -oP '(?<=&amp;country=)[^&]+' "$HTML" | sed 's/%20/ /g')
+STATE=${STATE:-Unknown}
 
-# -----------------------------------------
-# OUTPUT (DEBUG)
-# -----------------------------------------
+COUNTRY=$(grep -oP '(?<=&amp;country=)[^&]+' "$HTML" | sed 's/%20/ /g')
+COUNTRY=${COUNTRY:-Unknown}
+
+# --- DATA MANIPULATION ---
+# Clean numeric values
+for var in CURRENT_TEMP FEELS_LIKE FORECAST_HIGH FORECAST_LOW HUMIDITY; do
+    eval "$var=\$(echo \${$var} | tr -dc '0-9')"
+    eval "$var=\${$var:-0}"
+done
+
+# Clean and convert dates
+CLEAN_CURRENT_TIME=$(echo "$CURRENT_TIME" | sed 's/,//g; s/\.$//; s/Mac/Mar/g; s/Mei/May/g; s/Ogos/Aug/g; s/Okt/Oct/g; s/Dis/Dec/g')
+CLEAN_LATEST_REPORT=$(echo "$LATEST_REPORT" | sed 's/,//g; s/\.$//; s/Mac/Mar/g; s/Mei/May/g; s/Ogos/Aug/g; s/Okt/Oct/g; s/Dis/Dec/g')
+
+CURR_TIME_SQL=$(LC_ALL=en_US.UTF-8 date -d "$CLEAN_CURRENT_TIME" +"%Y-%m-%d %H:%M:%S" 2>/dev/null || date +"%Y-%m-%d %H:%M:%S")
+LATEST_REPORT_SQL=$(LC_ALL=en_US.UTF-8 date -d "$CLEAN_LATEST_REPORT" +"%Y-%m-%d %H:%M:%S" 2>/dev/null || date +"%Y-%m-%d %H:%M:%S")
+
+# --- OUTPUT DEBUG ---
 echo "--- WEATHER DATA ---"
 echo "Location:           $LOCATION"
 echo "State:              $STATE"
@@ -62,48 +113,14 @@ echo "Country:            $COUNTRY"
 echo "Current Time:       $CURRENT_TIME"
 echo "Latest Report:      $LATEST_REPORT"
 echo "Current Temp:       $CURRENT_TEMP"
-echo "Feels Like:         $FEELS_LIKE °C"
-echo "Forecast High:      $FORECAST_HIGH °C"
-echo "Forecast Low:       $FORECAST_LOW °C"
-echo "Humidity:           ${HUMIDITY}%"
+echo "Feels Like:         $FEELS_LIKE"
+echo "Forecast High:      $FORECAST_HIGH"
+echo "Forecast Low:       $FORECAST_LOW"
+echo "Humidity:           $HUMIDITY%"
 
-# -----------------------------------------
-# MYSQL INSERTION 
-# -----------------------------------------
-MYSQL_USER="root"
-MYSQL_PASS="NiNoFan28"
-MYSQL_DB="weatherDB"
-
-# Clean numeric fields
-CURRENT_TEMP=$(echo "$CURRENT_TEMP" | tr -dc '0-9')
-FEELS_LIKE=$(echo "$FEELS_LIKE" | tr -dc '0-9')
-FORECAST_HIGH=$(echo "$FORECAST_HIGH" | tr -dc '0-9')
-FORECAST_LOW=$(echo "$FORECAST_LOW" | tr -dc '0-9')
-HUMIDITY=$(echo "$HUMIDITY" | tr -dc '0-9')
-
-# -----------------------------------------
-# FIXED TIME CLEANING SECTION
-# -----------------------------------------
-
-# 1. Assign variables properly
-CLEAN_CURRENT_TIME="$CURRENT_TIME"
-CLEAN_LATEST_REPORT="$LATEST_REPORT"
-
-# 2. Remove comma, trailing dot, and replace Malaysian month names with English
-CLEAN_CURRENT_TIME_FIXED=$(echo "$CLEAN_CURRENT_TIME" \
-    | sed 's/,//g; s/\.$//; s/Mac/Mar/g; s/Mei/May/g; s/Ogos/Aug/g; s/Okt/Oct/g; s/Dis/Dec/g')
-
-CLEAN_LATEST_REPORT_FIXED=$(echo "$CLEAN_LATEST_REPORT" \
-    | sed 's/,//g; s/\.$//; s/Mac/Mar/g; s/Mei/May/g; s/Ogos/Aug/g; s/Okt/Oct/g; s/Dis/Dec/g')
-
-# 3. Convert cleaned time to MySQL datetime
-CURR_TIME_SQL=$(LC_ALL=en_US.UTF-8 date -d "$CLEAN_CURRENT_TIME_FIXED" +"%Y-%m-%d %H:%M:%S")
-LATEST_REPORT_SQL=$(LC_ALL=en_US.UTF-8 date -d "$CLEAN_LATEST_REPORT_FIXED" +"%Y-%m-%d %H:%M:%S")
-
-# -----------------------------------------
-# MYSQL INSERT EXECUTION
-# -----------------------------------------
-mysql -h 127.0.0.1 -P 3306 -u "$MYSQL_USER" -p"$MYSQL_PASS" -D "$MYSQL_DB" <<EOF
+# --- DATABASE INSERTION WITH ERROR CHECK ---
+MYSQL_EXIT_CODE=0
+mysql --defaults-file="$MY_CNF_FILE" <<EOF || MYSQL_EXIT_CODE=$?
 START TRANSACTION;
 
 INSERT INTO locations (name, state, country)
@@ -132,8 +149,8 @@ INSERT INTO forecasts (
 COMMIT;
 EOF
 
-if [ $? -eq 0 ]; then
-    echo "[✓] Done! Weather data inserted into tables successfully."
+if [ $MYSQL_EXIT_CODE -eq 0 ]; then
+    echo "[✓] Weather data inserted successfully."
 else
-    echo "[✗] Failed to insert weather data."
+    echo "[✗] Database insert failed with exit code $MYSQL_EXIT_CODE."
 fi

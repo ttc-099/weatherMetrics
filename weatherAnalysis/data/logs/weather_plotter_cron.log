@@ -1138,3 +1138,532 @@ mysql: [Warning] Using a password on the command line interface can be insecure.
 mysql: [Warning] Using a password on the command line interface can be insecure.
 [✓] All 10 plots generated in /mnt/c/Users/User/OneDrive/Desktop/dataManagement/sem1Project/weatherAnalysis/plots
 [✓] Data files saved in /mnt/c/Users/User/OneDrive/Desktop/dataManagement/sem1Project/weatherAnalysis/data/logs/plot-data-files
+[!] .env file not found at /mnt/c/Users/User/OneDrive/Desktop/dataManagement/sem1Project/weatherAnalysis/.env
+[+] Generating 10 weather plots...
+Project Root: /mnt/c/Users/User/OneDrive/Desktop/dataManagement/sem1Project/weatherAnalysis
+Plots Dir: /mnt/c/Users/User/OneDrive/Desktop/dataManagement/sem1Project/weatherAnalysis/plots
+Data Dir: /mnt/c/Users/User/OneDrive/Desktop/dataManagement/sem1Project/weatherAnalysis/data/logs/plot-data-files
+  Generating Plot 1: Current Temp vs Time...
+mysql: [ERROR] Failed to open required defaults file: /.my.cnf
+mysql: [ERROR] Fatal error in defaults handling. Program aborted!
+ Data sample:
+         line 0: warning: Skipping data file with no valid points
+
+gnuplot> plot "/mnt/c/Users/User/OneDrive/Desktop/dataManagement/sem1Project/weatherAnalysis/data/logs/plot-data-files/plot1_data.dat" using 1:2 with linespoints lw 2 lt rgb "blue" pt 7 ps 1.0 title "Current Temperature"
+                                                                                                                                                                                                                            ^
+         line 0: x range is invalid
+
+  Generating Plot 2: Current vs Feels Like...
+mysql: [ERROR] Failed to open required defaults file: /.my.cnf
+mysql: [ERROR] Fatal error in defaults handling. Program aborted!
+         line 0: warning: Skipping data file with no valid points
+         line 0: warning: Skipping data file with no valid points
+
+gnuplot> plot "/mnt/c/Users/User/OneDrive/Desktop/dataManagement/sem1Project/weatherAnalysis/data/logs/plot-data-files/plot2_data.dat" using 1:2 with linespoints lw 2 lt rgb "blue" pt 7 ps 1.0 title "Actual Temp", "/mnt/c/Users/User/OneDrive/Desktop/dataManagement/sem1Project/weatherAnalysis/data/logs/plot-data-files/plot2_data.dat" using 1:3 with linespoints lw 2 lt rgb "red" pt 5 ps 1.0 title "Feels Like"
+                                                                                                                                                                                                                                                                                                                                                                                                                          ^
+         line 0: x range is invalid
+
+Generating Plot 3: Humidity & Temp Over Time...
+mysql: [ERROR] Failed to open required defaults file: /.my.cnf
+mysql: [ERROR] Fatal error in defaults handling. Program aborted!
+         line 0: warning: Skipping data file with no valid points
+         line 0: warning: Skipping data file with no valid points
+
+gnuplot> plot "/mnt/c/Users/User/OneDrive/Desktop/dataManagement/sem1Project/weatherAnalysis/data/logs/plot-data-files/plot3_data.dat" using 1:2 with linespoints lw 2 lt rgb "blue" pt 7 ps 1.0 title "Temperature (Y1)",      "/mnt/c/Users/User/OneDrive/Desktop/dataManagement/sem1Project/weatherAnalysis/data/logs/plot-data-files/plot3_data.dat" using 1:3 axes x1y2 with linespoints lw 2 lt rgb "red" pt 5 ps 1.0 title "Humidity (Y2)"
+                                                                                                                                                                                                                                                                                                                                                                                                                                                 ^
+         line 0: x range is invalid
+
+  Generating Plot 4: Humidity vs Time...
+mysql: [ERROR] Failed to open required defaults file: /.my.cnf
+mysql: [ERROR] Fatal error in defaults handling. Program aborted!
+         line 0: warning: Skipping data file with no valid points
+
+gnuplot> plot "/mnt/c/Users/User/OneDrive/Desktop/dataManagement/sem1Project/weatherAnalysis/data/logs/plot-data-files/plot4_data.dat" using 1:2 with linespoints lw 2 lt rgb "green" pt 7 ps 1.0 title "Humidity"
+                                                                                                                                                                                                                  ^
+         line 0: x range is invalid
+
+  Generating Plot 5: Temperature Histogram...
+mysql: [ERROR] Failed to open required defaults file: /.my.cnf
+mysql: [ERROR] Fatal error in defaults handling. Program aborted!
+         line 0: warning: Skipping data file with no valid points
+
+gnuplot> plot "/mnt/c/Users/User/OneDrive/Desktop/dataManagement/sem1Project/weatherAnalysis/data/logs/plot-data-files/plot5_data.dat" using 2:xtic(1) lt rgb "orange" title "Frequency"
+                                                                                                                                                                                        ^
+         line 0: x range is invalid
+
+  Generating Plot 6: Scraping Success...
+mysql: [ERROR] Failed to open required defaults file: /.my.cnf
+mysql: [ERROR] Fatal error in defaults handling. Program aborted!
+         line 0: warning: Skipping data file with no valid points
+
+gnuplot> plot "/mnt/c/Users/User/OneDrive/Desktop/dataManagement/sem1Project/weatherAnalysis/data/logs/plot-data-files/plot6_data.dat" using 2:xtic(1) lt rgb "#FF6B6B" title "Count"
+                                                                                                                                                                                     ^
+         line 0: x range is invalid
+
+  Generating Plot 7: Daily Temp Range (Lines)...
+mysql: [ERROR] Failed to open required defaults file: /.my.cnf
+mysql: [ERROR] Fatal error in defaults handling. Program aborted!
+         line 0: warning: Skipping data file with no valid points
+         line 0: warning: Skipping data file with no valid points
+         line 0: warning: Skipping data file with no valid points
+
+gnuplot> plot "/mnt/c/Users/User/OneDrive/Desktop/dataManagement/sem1Project/weatherAnalysis/data/logs/plot-data-files/plot7_data.dat" using 1:2 with linespoints lw 2 lt rgb "blue" pt 7 title "Min Temp",      "/mnt/c/Users/User/OneDrive/Desktop/dataManagement/sem1Project/weatherAnalysis/data/logs/plot-data-files/plot7_data.dat" using 1:3 with linespoints lw 2 lt rgb "red" pt 7 title "Max Temp",      "/mnt/c/Users/User/OneDrive/Desktop/dataManagement/sem1Project/weatherAnalysis/data/logs/plot-data-files/plot7_data.dat" using 1:4 with linespoints lw 2 lt rgb "green" pt 7 title "Avg Temp"
+                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                ^
+         line 0: x range is invalid
+
+  Generating Plot 8: Data Collection Density ...
+mysql: [ERROR] Failed to open required defaults file: /.my.cnf
+mysql: [ERROR] Fatal error in defaults handling. Program aborted!
+         line 0: warning: Skipping data file with no valid points
+
+gnuplot> plot "/mnt/c/Users/User/OneDrive/Desktop/dataManagement/sem1Project/weatherAnalysis/data/logs/plot-data-files/plot8_data.dat" using 2:xtic(1) title "Success Count"
+                                                                                                                                                                            ^
+         line 0: x range is invalid
+
+  Generating Plot 9: High vs Low vs Feels Like...
+mysql: [ERROR] Failed to open required defaults file: /.my.cnf
+mysql: [ERROR] Fatal error in defaults handling. Program aborted!
+         line 0: warning: Skipping data file with no valid points
+         line 0: warning: Skipping data file with no valid points
+         line 0: warning: Skipping data file with no valid points
+         line 0: warning: Skipping data file with no valid points
+
+gnuplot> plot "/mnt/c/Users/User/OneDrive/Desktop/dataManagement/sem1Project/weatherAnalysis/data/logs/plot-data-files/plot9_data.dat" using 1:2 with linespoints lw 2 lt rgb "blue" pt 7 ps 0.8 title "Current", "/mnt/c/Users/User/OneDrive/Desktop/dataManagement/sem1Project/weatherAnalysis/data/logs/plot-data-files/plot9_data.dat" using 1:3 with linespoints lw 2 lt rgb "red" pt 5 ps 0.8 title "Feels Like", "/mnt/c/Users/User/OneDrive/Desktop/dataManagement/sem1Project/weatherAnalysis/data/logs/plot-data-files/plot9_data.dat" using 1:4 with linespoints lw 2 lt rgb "orange" pt 9 ps 0.8 title "Forecast High", "/mnt/c/Users/User/OneDrive/Desktop/dataManagement/sem1Project/weatherAnalysis/data/logs/plot-data-files/plot9_data.dat" using 1:5 with linespoints lw 2 lt rgb "purple" pt 1 ps 0.8 title "Forecast Low"
+                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                             ^
+         line 0: x range is invalid
+
+  Generating Plot 10: Weather Classification...
+mysql: [ERROR] Failed to open required defaults file: /.my.cnf
+mysql: [ERROR] Fatal error in defaults handling. Program aborted!
+Warning: empty y range [0:0], adjusting to [0:1]
+[✓] All 10 plots generated in /mnt/c/Users/User/OneDrive/Desktop/dataManagement/sem1Project/weatherAnalysis/plots
+[✓] Data files saved in /mnt/c/Users/User/OneDrive/Desktop/dataManagement/sem1Project/weatherAnalysis/data/logs/plot-data-files
+[!] Using DB Credentials:
+Host: 127.0.0.1
+User: root
+DB: weatherDB
+--------------------------
+[+] Generating 10 weather plots...
+Project Root: /mnt/c/Users/User/OneDrive/Desktop/dataManagement/sem1Project/weatherAnalysis
+Plots Dir: /mnt/c/Users/User/OneDrive/Desktop/dataManagement/sem1Project/weatherAnalysis/plots
+Data Dir: /mnt/c/Users/User/OneDrive/Desktop/dataManagement/sem1Project/weatherAnalysis/data/logs/plot-data-files
+Generating Plot 1: Current Temp vs Time...
+ERROR 1045 (28000): Access denied for user 'root'@'localhost' (using password: YES)
+ Data sample:
+         line 0: warning: Skipping data file with no valid points
+
+gnuplot> plot "/mnt/c/Users/User/OneDrive/Desktop/dataManagement/sem1Project/weatherAnalysis/data/logs/plot-data-files/plot1_data.dat" using 1:2 with linespoints lw 2 lt rgb "blue" pt 7 ps 1.0 title "Current Temperature"
+                                                                                                                                                                                                                            ^
+         line 0: x range is invalid
+
+Generating Plot 2: Current vs Feels Like...
+ERROR 1045 (28000): Access denied for user 'root'@'localhost' (using password: YES)
+         line 0: warning: Skipping data file with no valid points
+         line 0: warning: Skipping data file with no valid points
+
+gnuplot> plot "/mnt/c/Users/User/OneDrive/Desktop/dataManagement/sem1Project/weatherAnalysis/data/logs/plot-data-files/plot2_data.dat" using 1:2 with linespoints lw 2 lt rgb "blue" pt 7 ps 1.0 title "Actual Temp", "/mnt/c/Users/User/OneDrive/Desktop/dataManagement/sem1Project/weatherAnalysis/data/logs/plot-data-files/plot2_data.dat" using 1:3 with linespoints lw 2 lt rgb "red" pt 5 ps 1.0 title "Feels Like"
+                                                                                                                                                                                                                                                                                                                                                                                                                          ^
+         line 0: x range is invalid
+
+Generating Plot 3: Humidity & Temp Over Time...
+ERROR 1045 (28000): Access denied for user 'root'@'localhost' (using password: YES)
+         line 0: warning: Skipping data file with no valid points
+         line 0: warning: Skipping data file with no valid points
+
+gnuplot> plot "/mnt/c/Users/User/OneDrive/Desktop/dataManagement/sem1Project/weatherAnalysis/data/logs/plot-data-files/plot3_data.dat" using 1:2 with linespoints lw 2 lt rgb "blue" pt 7 ps 1.0 title "Temperature (Y1)", "/mnt/c/Users/User/OneDrive/Desktop/dataManagement/sem1Project/weatherAnalysis/data/logs/plot-data-files/plot3_data.dat" using 1:3 axes x1y2 with linespoints lw 2 lt rgb "red" pt 5 ps 1.0 title "Humidity (Y2)"
+                                                                                                                                                                                                                                                                                                                                                                                                                                            ^
+         line 0: x range is invalid
+
+Generating Plot 4: Humidity vs Time...
+ERROR 1045 (28000): Access denied for user 'root'@'localhost' (using password: YES)
+         line 0: warning: Skipping data file with no valid points
+
+gnuplot> plot "/mnt/c/Users/User/OneDrive/Desktop/dataManagement/sem1Project/weatherAnalysis/data/logs/plot-data-files/plot4_data.dat" using 1:2 with linespoints lw 2 lt rgb "green" pt 7 ps 1.0 title "Humidity"
+                                                                                                                                                                                                                  ^
+         line 0: x range is invalid
+
+Generating Plot 5: Temperature Histogram...
+ERROR 1045 (28000): Access denied for user 'root'@'localhost' (using password: YES)
+         line 0: warning: Skipping data file with no valid points
+
+gnuplot> plot "/mnt/c/Users/User/OneDrive/Desktop/dataManagement/sem1Project/weatherAnalysis/data/logs/plot-data-files/plot5_data.dat" using 2:xtic(1) lt rgb "orange" title "Frequency"
+                                                                                                                                                                                        ^
+         line 0: x range is invalid
+
+Generating Plot 6: Scraping Success...
+ERROR 1045 (28000): Access denied for user 'root'@'localhost' (using password: YES)
+         line 0: warning: Skipping data file with no valid points
+
+gnuplot> plot "/mnt/c/Users/User/OneDrive/Desktop/dataManagement/sem1Project/weatherAnalysis/data/logs/plot-data-files/plot6_data.dat" using 2:xtic(1) lt rgb "#FF6B6B" title "Count"
+                                                                                                                                                                                     ^
+         line 0: x range is invalid
+
+Generating Plot 7: Daily Temp Range (Lines)...
+ERROR 1045 (28000): Access denied for user 'root'@'localhost' (using password: YES)
+         line 0: warning: Skipping data file with no valid points
+         line 0: warning: Skipping data file with no valid points
+         line 0: warning: Skipping data file with no valid points
+
+gnuplot> plot "/mnt/c/Users/User/OneDrive/Desktop/dataManagement/sem1Project/weatherAnalysis/data/logs/plot-data-files/plot7_data.dat" using 1:2 with linespoints lw 2 lt rgb "blue" pt 7 title "Min Temp", "/mnt/c/Users/User/OneDrive/Desktop/dataManagement/sem1Project/weatherAnalysis/data/logs/plot-data-files/plot7_data.dat" using 1:3 with linespoints lw 2 lt rgb "red" pt 7 title "Max Temp", "/mnt/c/Users/User/OneDrive/Desktop/dataManagement/sem1Project/weatherAnalysis/data/logs/plot-data-files/plot7_data.dat" using 1:4 with linespoints lw 2 lt rgb "green" pt 7 title "Avg Temp"
+                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                      ^
+         line 0: x range is invalid
+
+Generating Plot 8: Data Collection Density ...
+ERROR 1045 (28000): Access denied for user 'root'@'localhost' (using password: YES)
+         line 0: warning: Skipping data file with no valid points
+
+gnuplot> plot "/mnt/c/Users/User/OneDrive/Desktop/dataManagement/sem1Project/weatherAnalysis/data/logs/plot-data-files/plot8_data.dat" using 2:xtic(1) title "Success Count"
+                                                                                                                                                                            ^
+         line 0: x range is invalid
+
+Generating Plot 9: High vs Low vs Feels Like...
+ERROR 1045 (28000): Access denied for user 'root'@'localhost' (using password: YES)
+         line 0: warning: Skipping data file with no valid points
+         line 0: warning: Skipping data file with no valid points
+         line 0: warning: Skipping data file with no valid points
+         line 0: warning: Skipping data file with no valid points
+
+gnuplot> plot "/mnt/c/Users/User/OneDrive/Desktop/dataManagement/sem1Project/weatherAnalysis/data/logs/plot-data-files/plot9_data.dat" using 1:2 with linespoints lw 2 lt rgb "blue" pt 7 ps 0.8 title "Current", "/mnt/c/Users/User/OneDrive/Desktop/dataManagement/sem1Project/weatherAnalysis/data/logs/plot-data-files/plot9_data.dat" using 1:3 with linespoints lw 2 lt rgb "red" pt 5 ps 0.8 title "Feels Like", "/mnt/c/Users/User/OneDrive/Desktop/dataManagement/sem1Project/weatherAnalysis/data/logs/plot-data-files/plot9_data.dat" using 1:4 with linespoints lw 2 lt rgb "orange" pt 9 ps 0.8 title "Forecast High", "/mnt/c/Users/User/OneDrive/Desktop/dataManagement/sem1Project/weatherAnalysis/data/logs/plot-data-files/plot9_data.dat" using 1:5 with linespoints lw 2 lt rgb "purple" pt 1 ps 0.8 title "Forecast Low"
+                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                             ^
+         line 0: x range is invalid
+
+Generating Plot 10: Weather Classification...
+ERROR 1045 (28000): Access denied for user 'root'@'localhost' (using password: YES)
+Warning: empty y range [0:0], adjusting to [0:1]
+[✓] All 10 plots generated in /mnt/c/Users/User/OneDrive/Desktop/dataManagement/sem1Project/weatherAnalysis/plots
+[✓] Data files saved in /mnt/c/Users/User/OneDrive/Desktop/dataManagement/sem1Project/weatherAnalysis/data/logs/plot-data-files
+
+[✓] All 10 plots generated in /mnt/c/Users/User/OneDrive/Desktop/dataManagement/sem1Project/weatherAnalysis/plots
+[✓] Data files saved in /mnt/c/Users/User/OneDrive/Desktop/dataManagement/sem1Project/weatherAnalysis/data/logs/plot-data-files
+[✓] Temporary MySQL configuration file deleted.
+[!] Using DB Credentials:
+Host: 127.0.0.1
+User: root
+DB: weatherDB
+--------------------------
+[+] Generating 10 weather plots...
+Project Root: /mnt/c/Users/User/OneDrive/Desktop/dataManagement/sem1Project/weatherAnalysis
+Plots Dir: /mnt/c/Users/User/OneDrive/Desktop/dataManagement/sem1Project/weatherAnalysis/plots
+Data Dir: /mnt/c/Users/User/OneDrive/Desktop/dataManagement/sem1Project/weatherAnalysis/data/logs/plot-data-files
+Generating Plot 1: Current Temp vs Time...
+ERROR 1045 (28000): Access denied for user 'root'@'localhost' (using password: YES)
+ Data sample:
+         line 0: warning: Skipping data file with no valid points
+
+gnuplot> plot "/mnt/c/Users/User/OneDrive/Desktop/dataManagement/sem1Project/weatherAnalysis/data/logs/plot-data-files/plot1_data.dat" using 1:2 with linespoints lw 2 lt rgb "blue" pt 7 ps 1.0 title "Current Temperature"
+                                                                                                                                                                                                                            ^
+         line 0: x range is invalid
+
+Generating Plot 2: Current vs Feels Like...
+ERROR 1045 (28000): Access denied for user 'root'@'localhost' (using password: YES)
+         line 0: warning: Skipping data file with no valid points
+         line 0: warning: Skipping data file with no valid points
+
+gnuplot> plot "/mnt/c/Users/User/OneDrive/Desktop/dataManagement/sem1Project/weatherAnalysis/data/logs/plot-data-files/plot2_data.dat" using 1:2 with linespoints lw 2 lt rgb "blue" pt 7 ps 1.0 title "Actual Temp", "/mnt/c/Users/User/OneDrive/Desktop/dataManagement/sem1Project/weatherAnalysis/data/logs/plot-data-files/plot2_data.dat" using 1:3 with linespoints lw 2 lt rgb "red" pt 5 ps 1.0 title "Feels Like"
+                                                                                                                                                                                                                                                                                                                                                                                                                          ^
+         line 0: x range is invalid
+
+Generating Plot 3: Humidity & Temp Over Time...
+ERROR 1045 (28000): Access denied for user 'root'@'localhost' (using password: YES)
+         line 0: warning: Skipping data file with no valid points
+         line 0: warning: Skipping data file with no valid points
+
+gnuplot> plot "/mnt/c/Users/User/OneDrive/Desktop/dataManagement/sem1Project/weatherAnalysis/data/logs/plot-data-files/plot3_data.dat" using 1:2 with linespoints lw 2 lt rgb "blue" pt 7 ps 1.0 title "Temperature (Y1)", "/mnt/c/Users/User/OneDrive/Desktop/dataManagement/sem1Project/weatherAnalysis/data/logs/plot-data-files/plot3_data.dat" using 1:3 axes x1y2 with linespoints lw 2 lt rgb "red" pt 5 ps 1.0 title "Humidity (Y2)"
+                                                                                                                                                                                                                                                                                                                                                                                                                                            ^
+         line 0: x range is invalid
+
+Generating Plot 4: Humidity vs Time...
+ERROR 1045 (28000): Access denied for user 'root'@'localhost' (using password: YES)
+         line 0: warning: Skipping data file with no valid points
+
+gnuplot> plot "/mnt/c/Users/User/OneDrive/Desktop/dataManagement/sem1Project/weatherAnalysis/data/logs/plot-data-files/plot4_data.dat" using 1:2 with linespoints lw 2 lt rgb "green" pt 7 ps 1.0 title "Humidity"
+                                                                                                                                                                                                                  ^
+         line 0: x range is invalid
+
+Generating Plot 5: Temperature Histogram...
+ERROR 1045 (28000): Access denied for user 'root'@'localhost' (using password: YES)
+         line 0: warning: Skipping data file with no valid points
+
+gnuplot> plot "/mnt/c/Users/User/OneDrive/Desktop/dataManagement/sem1Project/weatherAnalysis/data/logs/plot-data-files/plot5_data.dat" using 2:xtic(1) lt rgb "orange" title "Frequency"
+                                                                                                                                                                                        ^
+         line 0: x range is invalid
+
+Generating Plot 6: Scraping Success...
+ERROR 1045 (28000): Access denied for user 'root'@'localhost' (using password: YES)
+         line 0: warning: Skipping data file with no valid points
+
+gnuplot> plot "/mnt/c/Users/User/OneDrive/Desktop/dataManagement/sem1Project/weatherAnalysis/data/logs/plot-data-files/plot6_data.dat" using 2:xtic(1) lt rgb "#FF6B6B" title "Count"
+                                                                                                                                                                                     ^
+         line 0: x range is invalid
+
+Generating Plot 7: Daily Temp Range (Lines)...
+ERROR 1045 (28000): Access denied for user 'root'@'localhost' (using password: YES)
+         line 0: warning: Skipping data file with no valid points
+         line 0: warning: Skipping data file with no valid points
+         line 0: warning: Skipping data file with no valid points
+
+gnuplot> plot "/mnt/c/Users/User/OneDrive/Desktop/dataManagement/sem1Project/weatherAnalysis/data/logs/plot-data-files/plot7_data.dat" using 1:2 with linespoints lw 2 lt rgb "blue" pt 7 title "Min Temp", "/mnt/c/Users/User/OneDrive/Desktop/dataManagement/sem1Project/weatherAnalysis/data/logs/plot-data-files/plot7_data.dat" using 1:3 with linespoints lw 2 lt rgb "red" pt 7 title "Max Temp", "/mnt/c/Users/User/OneDrive/Desktop/dataManagement/sem1Project/weatherAnalysis/data/logs/plot-data-files/plot7_data.dat" using 1:4 with linespoints lw 2 lt rgb "green" pt 7 title "Avg Temp"
+                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                      ^
+         line 0: x range is invalid
+
+Generating Plot 8: Data Collection Density ...
+ERROR 1045 (28000): Access denied for user 'root'@'localhost' (using password: YES)
+         line 0: warning: Skipping data file with no valid points
+
+gnuplot> plot "/mnt/c/Users/User/OneDrive/Desktop/dataManagement/sem1Project/weatherAnalysis/data/logs/plot-data-files/plot8_data.dat" using 2:xtic(1) title "Success Count"
+                                                                                                                                                                            ^
+         line 0: x range is invalid
+
+Generating Plot 9: High vs Low vs Feels Like...
+ERROR 1045 (28000): Access denied for user 'root'@'localhost' (using password: YES)
+         line 0: warning: Skipping data file with no valid points
+         line 0: warning: Skipping data file with no valid points
+         line 0: warning: Skipping data file with no valid points
+         line 0: warning: Skipping data file with no valid points
+
+gnuplot> plot "/mnt/c/Users/User/OneDrive/Desktop/dataManagement/sem1Project/weatherAnalysis/data/logs/plot-data-files/plot9_data.dat" using 1:2 with linespoints lw 2 lt rgb "blue" pt 7 ps 0.8 title "Current", "/mnt/c/Users/User/OneDrive/Desktop/dataManagement/sem1Project/weatherAnalysis/data/logs/plot-data-files/plot9_data.dat" using 1:3 with linespoints lw 2 lt rgb "red" pt 5 ps 0.8 title "Feels Like", "/mnt/c/Users/User/OneDrive/Desktop/dataManagement/sem1Project/weatherAnalysis/data/logs/plot-data-files/plot9_data.dat" using 1:4 with linespoints lw 2 lt rgb "orange" pt 9 ps 0.8 title "Forecast High", "/mnt/c/Users/User/OneDrive/Desktop/dataManagement/sem1Project/weatherAnalysis/data/logs/plot-data-files/plot9_data.dat" using 1:5 with linespoints lw 2 lt rgb "purple" pt 1 ps 0.8 title "Forecast Low"
+                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                             ^
+         line 0: x range is invalid
+
+Generating Plot 10: Weather Classification...
+ERROR 1045 (28000): Access denied for user 'root'@'localhost' (using password: YES)
+Warning: empty y range [0:0], adjusting to [0:1]
+[✓] All 10 plots generated in /mnt/c/Users/User/OneDrive/Desktop/dataManagement/sem1Project/weatherAnalysis/plots
+[✓] Data files saved in /mnt/c/Users/User/OneDrive/Desktop/dataManagement/sem1Project/weatherAnalysis/data/logs/plot-data-files
+[✓] Temporary MySQL configuration file deleted.
+[!] Using DB Credentials:
+Host: 127.0.0.1
+User: root
+DB: weatherDB
+--------------------------
+[+] Generating 10 weather plots...
+Project Root: /mnt/c/Users/User/OneDrive/Desktop/dataManagement/sem1Project/weatherAnalysis
+Plots Dir: /mnt/c/Users/User/OneDrive/Desktop/dataManagement/sem1Project/weatherAnalysis/plots
+Data Dir: /mnt/c/Users/User/OneDrive/Desktop/dataManagement/sem1Project/weatherAnalysis/data/logs/plot-data-files
+Generating Plot 1: Current Temp vs Time...
+ERROR 1045 (28000): Access denied for user 'root'@'localhost' (using password: YES)
+ Data sample:
+         line 0: warning: Skipping data file with no valid points
+
+gnuplot> plot "/mnt/c/Users/User/OneDrive/Desktop/dataManagement/sem1Project/weatherAnalysis/data/logs/plot-data-files/plot1_data.dat" using 1:2 with linespoints lw 2 lt rgb "blue" pt 7 ps 1.0 title "Current Temperature"
+                                                                                                                                                                                                                            ^
+         line 0: x range is invalid
+
+Generating Plot 2: Current vs Feels Like...
+ERROR 1045 (28000): Access denied for user 'root'@'localhost' (using password: YES)
+         line 0: warning: Skipping data file with no valid points
+         line 0: warning: Skipping data file with no valid points
+
+gnuplot> plot "/mnt/c/Users/User/OneDrive/Desktop/dataManagement/sem1Project/weatherAnalysis/data/logs/plot-data-files/plot2_data.dat" using 1:2 with linespoints lw 2 lt rgb "blue" pt 7 ps 1.0 title "Actual Temp", "/mnt/c/Users/User/OneDrive/Desktop/dataManagement/sem1Project/weatherAnalysis/data/logs/plot-data-files/plot2_data.dat" using 1:3 with linespoints lw 2 lt rgb "red" pt 5 ps 1.0 title "Feels Like"
+                                                                                                                                                                                                                                                                                                                                                                                                                          ^
+         line 0: x range is invalid
+
+Generating Plot 3: Humidity & Temp Over Time...
+ERROR 1045 (28000): Access denied for user 'root'@'localhost' (using password: YES)
+         line 0: warning: Skipping data file with no valid points
+         line 0: warning: Skipping data file with no valid points
+
+gnuplot> plot "/mnt/c/Users/User/OneDrive/Desktop/dataManagement/sem1Project/weatherAnalysis/data/logs/plot-data-files/plot3_data.dat" using 1:2 with linespoints lw 2 lt rgb "blue" pt 7 ps 1.0 title "Temperature (Y1)", "/mnt/c/Users/User/OneDrive/Desktop/dataManagement/sem1Project/weatherAnalysis/data/logs/plot-data-files/plot3_data.dat" using 1:3 axes x1y2 with linespoints lw 2 lt rgb "red" pt 5 ps 1.0 title "Humidity (Y2)"
+                                                                                                                                                                                                                                                                                                                                                                                                                                            ^
+         line 0: x range is invalid
+
+Generating Plot 4: Humidity vs Time...
+ERROR 1045 (28000): Access denied for user 'root'@'localhost' (using password: YES)
+         line 0: warning: Skipping data file with no valid points
+
+gnuplot> plot "/mnt/c/Users/User/OneDrive/Desktop/dataManagement/sem1Project/weatherAnalysis/data/logs/plot-data-files/plot4_data.dat" using 1:2 with linespoints lw 2 lt rgb "green" pt 7 ps 1.0 title "Humidity"
+                                                                                                                                                                                                                  ^
+         line 0: x range is invalid
+
+Generating Plot 5: Temperature Histogram...
+ERROR 1045 (28000): Access denied for user 'root'@'localhost' (using password: YES)
+         line 0: warning: Skipping data file with no valid points
+
+gnuplot> plot "/mnt/c/Users/User/OneDrive/Desktop/dataManagement/sem1Project/weatherAnalysis/data/logs/plot-data-files/plot5_data.dat" using 2:xtic(1) lt rgb "orange" title "Frequency"
+                                                                                                                                                                                        ^
+         line 0: x range is invalid
+
+Generating Plot 6: Scraping Success...
+ERROR 1045 (28000): Access denied for user 'root'@'localhost' (using password: YES)
+         line 0: warning: Skipping data file with no valid points
+
+gnuplot> plot "/mnt/c/Users/User/OneDrive/Desktop/dataManagement/sem1Project/weatherAnalysis/data/logs/plot-data-files/plot6_data.dat" using 2:xtic(1) lt rgb "#FF6B6B" title "Count"
+                                                                                                                                                                                     ^
+         line 0: x range is invalid
+
+Generating Plot 7: Daily Temp Range (Lines)...
+ERROR 1045 (28000): Access denied for user 'root'@'localhost' (using password: YES)
+         line 0: warning: Skipping data file with no valid points
+         line 0: warning: Skipping data file with no valid points
+         line 0: warning: Skipping data file with no valid points
+
+gnuplot> plot "/mnt/c/Users/User/OneDrive/Desktop/dataManagement/sem1Project/weatherAnalysis/data/logs/plot-data-files/plot7_data.dat" using 1:2 with linespoints lw 2 lt rgb "blue" pt 7 title "Min Temp", "/mnt/c/Users/User/OneDrive/Desktop/dataManagement/sem1Project/weatherAnalysis/data/logs/plot-data-files/plot7_data.dat" using 1:3 with linespoints lw 2 lt rgb "red" pt 7 title "Max Temp", "/mnt/c/Users/User/OneDrive/Desktop/dataManagement/sem1Project/weatherAnalysis/data/logs/plot-data-files/plot7_data.dat" using 1:4 with linespoints lw 2 lt rgb "green" pt 7 title "Avg Temp"
+                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                      ^
+         line 0: x range is invalid
+
+Generating Plot 8: Data Collection Density ...
+ERROR 1045 (28000): Access denied for user 'root'@'localhost' (using password: YES)
+         line 0: warning: Skipping data file with no valid points
+
+gnuplot> plot "/mnt/c/Users/User/OneDrive/Desktop/dataManagement/sem1Project/weatherAnalysis/data/logs/plot-data-files/plot8_data.dat" using 2:xtic(1) title "Success Count"
+                                                                                                                                                                            ^
+         line 0: x range is invalid
+
+Generating Plot 9: High vs Low vs Feels Like...
+ERROR 1045 (28000): Access denied for user 'root'@'localhost' (using password: YES)
+         line 0: warning: Skipping data file with no valid points
+         line 0: warning: Skipping data file with no valid points
+         line 0: warning: Skipping data file with no valid points
+         line 0: warning: Skipping data file with no valid points
+
+gnuplot> plot "/mnt/c/Users/User/OneDrive/Desktop/dataManagement/sem1Project/weatherAnalysis/data/logs/plot-data-files/plot9_data.dat" using 1:2 with linespoints lw 2 lt rgb "blue" pt 7 ps 0.8 title "Current", "/mnt/c/Users/User/OneDrive/Desktop/dataManagement/sem1Project/weatherAnalysis/data/logs/plot-data-files/plot9_data.dat" using 1:3 with linespoints lw 2 lt rgb "red" pt 5 ps 0.8 title "Feels Like", "/mnt/c/Users/User/OneDrive/Desktop/dataManagement/sem1Project/weatherAnalysis/data/logs/plot-data-files/plot9_data.dat" using 1:4 with linespoints lw 2 lt rgb "orange" pt 9 ps 0.8 title "Forecast High", "/mnt/c/Users/User/OneDrive/Desktop/dataManagement/sem1Project/weatherAnalysis/data/logs/plot-data-files/plot9_data.dat" using 1:5 with linespoints lw 2 lt rgb "purple" pt 1 ps 0.8 title "Forecast Low"
+                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                             ^
+         line 0: x range is invalid
+
+Generating Plot 10: Weather Classification...
+ERROR 1045 (28000): Access denied for user 'root'@'localhost' (using password: YES)
+Warning: empty y range [0:0], adjusting to [0:1]
+[✓] All 10 plots generated in /mnt/c/Users/User/OneDrive/Desktop/dataManagement/sem1Project/weatherAnalysis/plots
+[✓] Data files saved in /mnt/c/Users/User/OneDrive/Desktop/dataManagement/sem1Project/weatherAnalysis/data/logs/plot-data-files
+[✓] Temporary MySQL configuration file deleted.
+[!] Using DB Credentials:
+Host: 127.0.0.1
+User: root
+DB: weatherDB
+--------------------------
+[+] Generating 10 weather plots...
+Project Root: /mnt/c/Users/User/OneDrive/Desktop/dataManagement/sem1Project/weatherAnalysis
+Plots Dir: /mnt/c/Users/User/OneDrive/Desktop/dataManagement/sem1Project/weatherAnalysis/plots
+Data Dir: /mnt/c/Users/User/OneDrive/Desktop/dataManagement/sem1Project/weatherAnalysis/data/logs/plot-data-files
+Generating Plot 1: Current Temp vs Time...
+ Data sample:
+2025-11-25 15:56:34	29
+2025-11-25 16:00:03	29
+2025-11-25 17:00:03	27
+Generating Plot 2: Current vs Feels Like...
+Generating Plot 3: Humidity & Temp Over Time...
+Generating Plot 4: Humidity vs Time...
+Generating Plot 5: Temperature Histogram...
+Generating Plot 6: Scraping Success...
+Generating Plot 7: Daily Temp Range (Lines)...
+Generating Plot 8: Data Collection Density ...
+Generating Plot 9: High vs Low vs Feels Like...
+Generating Plot 10: Weather Classification...
+[✓] All 10 plots generated in /mnt/c/Users/User/OneDrive/Desktop/dataManagement/sem1Project/weatherAnalysis/plots
+[✓] Data files saved in /mnt/c/Users/User/OneDrive/Desktop/dataManagement/sem1Project/weatherAnalysis/data/logs/plot-data-files
+[✓] Temporary MySQL configuration file deleted.
+[!] Using DB Credentials:
+Host: 127.0.0.1
+User: root
+DB: weatherDB
+--------------------------
+[+] Generating 10 weather plots...
+Project Root: /mnt/c/Users/User/OneDrive/Desktop/dataManagement/sem1Project/weatherAnalysis
+Plots Dir: /mnt/c/Users/User/OneDrive/Desktop/dataManagement/sem1Project/weatherAnalysis/plots
+Data Dir: /mnt/c/Users/User/OneDrive/Desktop/dataManagement/sem1Project/weatherAnalysis/data/logs/plot-data-files
+Generating Plot 1: Current Temp vs Time...
+ Data sample:
+2025-11-25 15:56:34	29
+2025-11-25 16:00:03	29
+2025-11-25 17:00:03	27
+Generating Plot 2: Current vs Feels Like...
+Generating Plot 3: Humidity & Temp Over Time...
+Generating Plot 4: Humidity vs Time...
+Generating Plot 5: Temperature Histogram...
+Generating Plot 6: Scraping Success...
+Generating Plot 7: Daily Temp Range (Lines)...
+Generating Plot 8: Data Collection Density ...
+Generating Plot 9: High vs Low vs Feels Like...
+Generating Plot 10: Weather Classification...
+[✓] All 10 plots generated in /mnt/c/Users/User/OneDrive/Desktop/dataManagement/sem1Project/weatherAnalysis/plots
+[✓] Data files saved in /mnt/c/Users/User/OneDrive/Desktop/dataManagement/sem1Project/weatherAnalysis/data/logs/plot-data-files
+[✓] Temporary MySQL configuration file deleted.
+[!] ERROR: DB_PASSWORD environment variable is not set.
+Please source your .env file.
+
+testing
+
+/bin/sh: 1: source: not found
+/bin/sh: 1: .: cannot open $PROJECT_ROOT/../.env: No such file
+[!] ERROR: DB_PASSWORD environment variable is not set.
+Please source your .env file.
+w
+
+test[!] Using DB Credentials:
+Host: 127.0.0.1
+User: root
+DB: weatherDB
+--------------------------
+[+] Generating 10 weather plots...
+Project Root: /mnt/c/Users/User/OneDrive/Desktop/dataManagement/sem1Project/weatherAnalysis
+Plots Dir: /mnt/c/Users/User/OneDrive/Desktop/dataManagement/sem1Project/weatherAnalysis/plots
+Data Dir: /mnt/c/Users/User/OneDrive/Desktop/dataManagement/sem1Project/weatherAnalysis/data/logs/plot-data-files
+Generating Plot 1: Current Temp vs Time...
+ Data sample:
+2025-11-25 15:56:34	29
+2025-11-25 16:00:03	29
+2025-11-25 17:00:03	27
+Generating Plot 2: Current vs Feels Like...
+Generating Plot 3: Humidity & Temp Over Time...
+Generating Plot 4: Humidity vs Time...
+Generating Plot 5: Temperature Histogram...
+Generating Plot 6: Scraping Success...
+Generating Plot 7: Daily Temp Range (Lines)...
+Generating Plot 8: Data Collection Density ...
+Generating Plot 9: High vs Low vs Feels Like...
+Generating Plot 10: Weather Classification...
+[✓] All 10 plots generated in /mnt/c/Users/User/OneDrive/Desktop/dataManagement/sem1Project/weatherAnalysis/plots
+[✓] Data files saved in /mnt/c/Users/User/OneDrive/Desktop/dataManagement/sem1Project/weatherAnalysis/data/logs/plot-data-files
+[✓] Temporary MySQL configuration file deleted.
+[!] Using DB Credentials:
+Host: 127.0.0.1
+User: root
+DB: weatherDB
+--------------------------
+[+] Generating 10 weather plots...
+Project Root: /mnt/c/Users/User/OneDrive/Desktop/dataManagement/sem1Project/weatherAnalysis
+Plots Dir: /mnt/c/Users/User/OneDrive/Desktop/dataManagement/sem1Project/weatherAnalysis/plots
+Data Dir: /mnt/c/Users/User/OneDrive/Desktop/dataManagement/sem1Project/weatherAnalysis/data/logs/plot-data-files
+Generating Plot 1: Current Temp vs Time...
+ Data sample:
+2025-11-25 15:56:34	29
+2025-11-25 16:00:03	29
+2025-11-25 17:00:03	27
+Generating Plot 2: Current vs Feels Like...
+Generating Plot 3: Humidity & Temp Over Time...
+Generating Plot 4: Humidity vs Time...
+Generating Plot 5: Temperature Histogram...
+Generating Plot 6: Scraping Success...
+Generating Plot 7: Daily Temp Range (Lines)...
+Generating Plot 8: Data Collection Density ...
+Generating Plot 9: High vs Low vs Feels Like...
+Generating Plot 10: Weather Classification...
+[✓] All 10 plots generated in /mnt/c/Users/User/OneDrive/Desktop/dataManagement/sem1Project/weatherAnalysis/plots
+[✓] Data files saved in /mnt/c/Users/User/OneDrive/Desktop/dataManagement/sem1Project/weatherAnalysis/data/logs/plot-data-files
+[✓] Temporary MySQL configuration file deleted.
+[!] Using DB Credentials:
+Host: 127.0.0.1
+User: root
+DB: weatherDB
+--------------------------
+[+] Generating 10 weather plots...
+Project Root: /mnt/c/Users/User/OneDrive/Desktop/dataManagement/sem1Project/weatherAnalysis
+Plots Dir: /mnt/c/Users/User/OneDrive/Desktop/dataManagement/sem1Project/weatherAnalysis/plots
+Data Dir: /mnt/c/Users/User/OneDrive/Desktop/dataManagement/sem1Project/weatherAnalysis/data/logs/plot-data-files
+Generating Plot 1: Current Temp vs Time...
+ Data sample:
+2025-11-25 15:56:34	29
+2025-11-25 16:00:03	29
+2025-11-25 17:00:03	27
+Generating Plot 2: Current vs Feels Like...
+Generating Plot 3: Humidity & Temp Over Time...
+Generating Plot 4: Humidity vs Time...
+Generating Plot 5: Temperature Histogram...
+Generating Plot 6: Scraping Success...
+Generating Plot 7: Daily Temp Range (Lines)...
+Generating Plot 8: Data Collection Density ...
+Generating Plot 9: High vs Low vs Feels Like...
+Generating Plot 10: Weather Classification...
+[✓] All 10 plots generated in /mnt/c/Users/User/OneDrive/Desktop/dataManagement/sem1Project/weatherAnalysis/plots
+[✓] Data files saved in /mnt/c/Users/User/OneDrive/Desktop/dataManagement/sem1Project/weatherAnalysis/data/logs/plot-data-files
+[✓] Temporary MySQL configuration file deleted.

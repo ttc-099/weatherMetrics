@@ -541,3 +541,194 @@ Forecast Low:       23 °C
 Humidity:           55%
 mysql: [Warning] Using a password on the command line interface can be insecure.
 [✓] Done! Weather data inserted into tables successfully.
+[+] Fetching HTML...
+[+] Extracting weather data...
+--- WEATHER DATA ---
+Location:           Sultan Abdul Aziz Shah-Subang
+State:              Kuala Lumpur
+Country:            Malaysia
+Current Time:       09 Dis 2025, 22:00:01.
+Latest Report:      09 Dis 2025, 21:00.
+Current Temp:       28 °C
+Feels Like:         32 °C
+Forecast High:      31 °C
+Forecast Low:       23 °C
+Humidity:           79%
+allexport      	on
+braceexpand    	on
+emacs          	off
+errexit        	off
+errtrace       	off
+functrace      	off
+hashall        	on
+histexpand     	off
+history        	off
+ignoreeof      	off
+interactive-comments	on
+keyword        	off
+monitor        	off
+noclobber      	off
+noexec         	off
+noglob         	off
+nolog          	off
+notify         	off
+nounset        	off
+onecmd         	off
+physical       	off
+pipefail       	off
+posix          	off
+privileged     	off
+verbose        	off
+vi             	off
+xtrace         	off
+NiNoFan28
+mysql: [Warning] Using a password on the command line interface can be insecure.
+ERROR 1045 (28000): Access denied for user 'root
+'@'localhost' (using password: YES)
+[✗] Failed to insert weather data.
+[+] Fetching HTML...
+[+] Extracting weather data...
+--- WEATHER DATA ---
+Location:           Sultan Abdul Aziz Shah-Subang
+State:              Kuala Lumpur
+Country:            Malaysia
+Current Time:       10 Dis 2025, 14:00:02.
+Latest Report:      10 Dis 2025, 13:00.
+Current Temp:       32 °C
+Feels Like:         34 °C
+Forecast High:      32 °C
+Forecast Low:       23 °C
+Humidity:           49%
+mysql: [Warning] Using a password on the command line interface can be insecure.
+[✓] Done! Weather data inserted into tables successfully.
+[+] Fetching HTML...
+[+] Extracting weather data...
+--- WEATHER DATA ---
+Location:           Sultan Abdul Aziz Shah-Subang
+State:              Kuala Lumpur
+Country:            Malaysia
+Current Time:       10 Dis 2025, 15:00:02.
+Latest Report:      10 Dis 2025, 14:00.
+Current Temp:       30 °C
+Feels Like:         35 °C
+Forecast High:      32 °C
+Forecast Low:       23 °C
+Humidity:           70%
+mysql: [Warning] Using a password on the command line interface can be insecure.
+[✓] Done! Weather data inserted into tables successfully.
+[+] Fetching HTML...
+[+] Extracting weather data...
+--- WEATHER DATA ---
+Location:           Sultan Abdul Aziz Shah-Subang
+State:              Kuala Lumpur
+Country:            Malaysia
+Current Time:       10 Dis 2025, 21:00:02.
+Latest Report:      10 Dis 2025, 20:00.
+Current Temp:       29 °C
+Feels Like:         33 °C
+Forecast High:      32 °C
+Forecast Low:       24 °C
+Humidity:           70%
+ERROR 1045 (28000): Access denied for user 'root'@'localhost' (using password: YES)
+[✗] Failed to insert weather data.
+[✓] Temporary MySQL configuration file deleted.
+[+] Fetching HTML...
+[+] Extracting weather data...
+--- WEATHER DATA ---
+Location:           Sultan Abdul Aziz Shah-Subang
+State:              Kuala Lumpur
+Country:            Malaysia
+Current Time:       11 Dis 2025, 14:00:01.
+Latest Report:      11 Dis 2025, 13:00.
+Current Temp:       29 °C
+Feels Like:         34 °C
+Forecast High:      32 °C
+Forecast Low:       25 °C
+Humidity:           74%
+ERROR 1045 (28000): Access denied for user 'root'@'localhost' (using password: YES)
+[✗] Failed to insert weather data.
+[✓] Temporary MySQL configuration file deleted.
+[+] Fetching HTML...
+[+] Extracting weather data...
+--- WEATHER DATA ---
+Location:           Sultan Abdul Aziz Shah-Subang
+State:              Kuala Lumpur
+Country:            Malaysia
+Current Time:       11 Dis 2025, 15:00:01.
+Latest Report:      11 Dis 2025, 14:00.
+Current Temp:       30 °C
+Feels Like:         35 °C
+Forecast High:      32 °C
+Forecast Low:       25 °C
+Humidity:           70%
+[✓] Done! Weather data inserted into tables successfully.
+[✓] Temporary MySQL configuration file deleted.
+[+] Fetching HTML...
+[+] Extracting weather data...
+--- WEATHER DATA ---
+Location:           Sultan Abdul Aziz Shah-Subang
+State:              Kuala Lumpur
+Country:            Malaysia
+Current Time:       11 Dis 2025, 16:00:02.
+Latest Report:      11 Dis 2025, 15:00.
+Current Temp:       32 °C
+Feels Like:         37 °C
+Forecast High:      32 °C
+Forecast Low:       25 °C
+Humidity:           59%
+[✓] Done! Weather data inserted into tables successfully.
+[✓] Temporary MySQL configuration file deleted.
+[!] ERROR: DB_PASSWORD environment variable is not set.
+Please source your .env file.
+
+testing
+
+/bin/sh: 1: source: not found
+/bin/sh: 1: .: cannot open $PROJECT_ROOT/../.env: No such file
+[!] ERROR: DB_PASSWORD environment variable is not set.
+Please source your .env file.
+
+test[+] Fetching HTML...
+[+] Extracting weather data...
+--- WEATHER DATA ---
+Location:           Sultan Abdul Aziz Shah-Subang
+State:              Kuala Lumpur
+Country:            Malaysia
+Current Time:       11 Dis 2025, 22:00:04.
+Latest Report:      11 Dis 2025, 21:00.
+Current Temp:       28 °C
+Feels Like:         33 °C
+Forecast High:      33 °C
+Forecast Low:       25 °C
+Humidity:           84%
+[✓] Done! Weather data inserted into tables successfully.
+[✓] Temporary MySQL configuration file deleted.
+[+] Fetching HTML...
+[+] Extracting weather data...
+--- WEATHER DATA ---
+Location:           Sultan Abdul Aziz Shah-Subang
+State:              Kuala Lumpur
+Country:            Malaysia
+Current Time:       12 Dis 2025, 12:00:06.
+Latest Report:      12 Dis 2025, 11:00.
+Current Temp:       31 °C
+Feels Like:         35 °C
+Forecast High:      30 °C
+Forecast Low:       24 °C
+Humidity:           59%
+[✓] Done! Weather data inserted into tables successfully.
+[✓] Temporary MySQL configuration file deleted.
+[+] Extracting weather data...
+--- WEATHER DATA ---
+Location:           Sultan Abdul Aziz Shah-Subang
+State:              Kuala Lumpur
+Country:            Malaysia
+Current Time:       12 Dis 2025, 13:00:05.
+Latest Report:      12 Dis 2025, 12:00.
+Current Temp:       33
+Feels Like:         37
+Forecast High:      30
+Forecast Low:       24
+Humidity:           52%
+[✓] Weather data inserted successfully.
+[✓] Temporary MySQL config deleted.
