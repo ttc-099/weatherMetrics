@@ -1302,3 +1302,18 @@ Forecast Low:       24
 Humidity:           94%
 [✓] Weather data inserted successfully.
 [✓] Temporary MySQL config deleted.
+[*] Sourcing environment variables from the project root (../../.env)
+[+] Extracting weather data...
+--- WEATHER DATA ---
+Location:           Sultan Abdul Aziz Shah-Subang
+State:              Kuala Lumpur
+Country:            Malaysia
+Current Time:       15 Dis 2025, 0:25:56.
+Latest Report:      15 Dis 2025, 0:00.
+Current Temp:       25
+Feels Like:         26
+Forecast High:      30
+Forecast Low:       24
+Humidity:           94%
+[✓] Weather data inserted successfully.
+[✓] Temporary MySQL config deleted.

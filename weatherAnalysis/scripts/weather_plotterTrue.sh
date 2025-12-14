@@ -1,22 +1,17 @@
 #!/bin/bash
 
 # --- CONFIGURATION / ENVIRONMENT VARIABLE READING ---
-# We will use variables sourced from the .env file.
-if [ -f ../../.env ]; then # <--- THE CRITICAL CHANGE IS HERE: ../../.env
+if [ -f ../../.env ]; then 
     echo "[*] Sourcing environment variables from the project root (../../.env)"
     set -a # Automatically export all following variable assignments
-    source ../../.env # <--- Updated the path to two levels up
+    source ../../.env 
     set +a # Turn off auto-export
 fi
 
-# Read Configuration from Environment Variables (set by 'source .env')
-# Use defaults if variables are not set (e.g., if .env was forgotten)
 MYSQL_HOST="${DB_HOST:-127.0.0.1}"
 MYSQL_USER="${DB_USER:-root}"
 MYSQL_DB="${DB_NAME:-weatherDB}"
 
-# 2. Force the password to be loaded from the environment (DB_PASSWORD)
-#    If the environment variable is NOT set, the script will EXIT with an error.
 if [ -z "$DB_PASSWORD" ]; then
     echo "[!] ERROR: DB_PASSWORD environment variable is not set." >&2
     echo "Please source your .env file." >&2
@@ -88,9 +83,6 @@ mysql --defaults-file="$MY_CNF_FILE" -N -e \
 FROM observations \
 WHERE current_temp IS NOT NULL \
 ORDER BY observation_time;" > "$DATA_DIR/plot1_data.dat"
-
-echo " Data sample:"
-head -n 3 "$DATA_DIR/plot1_data.dat"
 
 gnuplot <<EOF
 set terminal pngcairo size 1000,600 enhanced font 'Verdana,10'
@@ -209,26 +201,38 @@ plot "$DATA_DIR/plot5_data.dat" using 2:xtic(1) lt rgb "orange" title "Frequency
 EOF
 
 # ------------------------------
-# 6. SCRAPING SUCCESS
+# 6. SCRAPING RELIABILITY OVER TIME (LINE GRAPH)
 # ------------------------------
-echo "Generating Plot 6: Scraping Success..."
+echo "Generating Plot 6: Scraping Reliability Over Time..."
+
 mysql --defaults-file="$MY_CNF_FILE" -N -e \
-"SELECT status, COUNT(*) as count \
-FROM scrape_logs \
-GROUP BY status;" > "$DATA_DIR/plot6_data.dat"
+"SELECT 
+    DATE(scraped_at) AS date,
+    SUM(status = 'success') / COUNT(*) * 100 AS success_rate
+FROM scrape_logs
+GROUP BY DATE(scraped_at)
+ORDER BY DATE(scraped_at);" > "$DATA_DIR/plot6_data.dat"
 
 gnuplot <<EOF
-set terminal pngcairo size 800,600 enhanced font 'Verdana,10'
-set output "$PLOTS_DIR/6-scraping-success.png"
-set title "Scraping Status"
-set xlabel "Status"
-set ylabel "Count"
-set style data histograms
-set style fill solid 0.8
-set boxwidth 0.8
-set yrange [0:*]
-plot "$DATA_DIR/plot6_data.dat" using 2:xtic(1) lt rgb "#FF6B6B" title "Count"
+set terminal pngcairo size 1000,600 enhanced font 'Verdana,10'
+set output "$PLOTS_DIR/6-scraping-reliability.png"
+set title "Scraping Reliability Over Time"
+
+set xlabel "Date"
+set ylabel "Success Rate (%)"
+
+set grid
+set datafile separator "\t"
+set xdata time
+set timefmt "%Y-%m-%d"
+set format x "%d-%m"
+set xtics rotate by -45
+
+set yrange [0:100]
+
+plot "$DATA_DIR/plot6_data.dat" using 1:2 with linespoints lw 2 pt 7 title "Success Rate"
 EOF
+
 
 # ------------------------------
 # 7. DAILY TEMP RANGE (Line Plot)
@@ -262,31 +266,46 @@ plot "$DATA_DIR/plot7_data.dat" using 1:2 with linespoints lw 2 lt rgb "blue" pt
 EOF
 
 # ------------------------------
-# 8. DATA COLLECTION DENSITY OVER TIME (BAR CHART)
+# 8. SCRAPING ACTIVITY & SUCCESS RATE OVER TIME (DUAL-AXIS LINE)
 # ------------------------------
-echo "Generating Plot 8: Data Collection Density ..."
+echo "Generating Plot 8: Scraping Activity & Success Rate..."
+
 mysql --defaults-file="$MY_CNF_FILE" -N -e \
-"SELECT DATE(scraped_at) AS date,
-COUNT(DISTINCT scrape_id) AS count_success
+"SELECT 
+    DATE(scraped_at) AS date,
+    COUNT(*) AS total_scrapes,
+    SUM(status = 'success') / COUNT(*) * 100 AS success_rate
 FROM scrape_logs
-WHERE status = 'success'
 GROUP BY DATE(scraped_at)
 ORDER BY DATE(scraped_at);" > "$DATA_DIR/plot8_data.dat"
 
+
 gnuplot <<EOF
 set terminal pngcairo size 1000,600 enhanced font 'Verdana,10'
-set output "$PLOTS_DIR/8-data-collection-density.png"
-set title "Daily Data Collection Density (Successful Scrapes)"
+set output "$PLOTS_DIR/8-scraping-activity-success-rate.png"
+set title "Scraping Activity and Success Rate Over Time"
+
 set xlabel "Date"
-set ylabel "Successful Scrapes"
+set ylabel "Total Scrapes"
+set y2label "Success Rate (%)"
+
+set ytics nomirror
+set y2tics
+set y2range [0:100]
+
 set grid
+
 set datafile separator "\t"
-set style data histograms
-set style fill solid 0.8
-set boxwidth 0.7
-set yrange [0:*]
-plot "$DATA_DIR/plot8_data.dat" using 2:xtic(1) title "Success Count"
+set xdata time
+set timefmt "%Y-%m-%d"
+set format x "%d-%m"
+set xtics rotate by -45
+
+plot \
+"$DATA_DIR/plot8_data.dat" using 1:2 with linespoints lw 2 lt rgb "blue" pt 7 title "Total Scrapes (Y1)", \
+"$DATA_DIR/plot8_data.dat" using 1:3 axes x1y2 with linespoints lw 2 lt rgb "green" pt 5 title "Success Rate % (Y2)"
 EOF
+
 
 # ------------------------------
 # 9. HIGH VS LOW VS FEELS LIKE
@@ -347,7 +366,7 @@ done
 
 gnuplot <<EOF
 set terminal pngcairo size 1000,600 enhanced font 'Verdana,10'
-set output "$PLOTS_DIR/10-weather-class-pie.png"
+set output "$PLOTS_DIR/10-weather-class-bars.png"
 set title "Weather Classification"
 set xlabel "Type"
 set ylabel "Frequency"

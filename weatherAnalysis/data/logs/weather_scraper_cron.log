@@ -732,3 +732,205 @@ Forecast Low:       24
 Humidity:           52%
 [✓] Weather data inserted successfully.
 [✓] Temporary MySQL config deleted.
+[!] Retry 1/3...
+[!] Retry 2/3...
+[!] Retry 3/3...
+[+] Extracting weather data...
+--- WEATHER DATA ---
+Location:           Sultan Abdul Aziz Shah-Subang
+State:              Kuala Lumpur
+Country:            Malaysia
+Current Time:       12 Dis 2025, 19:39:56.
+Latest Report:      12 Dis 2025, 19:00.
+Current Temp:       25
+Feels Like:         26
+Forecast High:      30
+Forecast Low:       24
+Humidity:           94%
+[✓] Weather data inserted successfully.
+[✓] Temporary MySQL config deleted.
+[!] Retry 1/3...
+[!] Retry 2/3...
+[!] Retry 3/3...
+[+] Extracting weather data...
+--- WEATHER DATA ---
+Location:           Sultan Abdul Aziz Shah-Subang
+State:              Kuala Lumpur
+Country:            Malaysia
+Current Time:       12 Dis 2025, 19:39:56.
+Latest Report:      12 Dis 2025, 19:00.
+Current Temp:       25
+Feels Like:         26
+Forecast High:      30
+Forecast Low:       24
+Humidity:           94%
+[✓] Weather data inserted successfully.
+[✓] Temporary MySQL config deleted.
+[+] Extracting weather data...
+--- WEATHER DATA ---
+Location:           Sultan Abdul Aziz Shah-Subang
+State:              Kuala Lumpur
+Country:            Malaysia
+Current Time:       13 Dis 2025, 12:00:02.
+Latest Report:      13 Dis 2025, 11:00.
+Current Temp:       27
+Feels Like:         30
+Forecast High:      30
+Forecast Low:       23
+Humidity:           84%
+[✓] Weather data inserted successfully.
+[✓] Temporary MySQL config deleted.
+[+] Extracting weather data...
+--- WEATHER DATA ---
+Location:           Sultan Abdul Aziz Shah-Subang
+State:              Kuala Lumpur
+Country:            Malaysia
+Current Time:       13 Dis 2025, 13:00:02.
+Latest Report:      13 Dis 2025, 12:00.
+Current Temp:       29
+Feels Like:         34
+Forecast High:      31
+Forecast Low:       24
+Humidity:           74%
+[✓] Weather data inserted successfully.
+[✓] Temporary MySQL config deleted.
+[+] Extracting weather data...
+--- WEATHER DATA ---
+Location:           Sultan Abdul Aziz Shah-Subang
+State:              Kuala Lumpur
+Country:            Malaysia
+Current Time:       13 Dis 2025, 14:00:01.
+Latest Report:      13 Dis 2025, 13:00.
+Current Temp:       31
+Feels Like:         35
+Forecast High:      31
+Forecast Low:       24
+Humidity:           62%
+[✓] Weather data inserted successfully.
+[✓] Temporary MySQL config deleted.
+[+] Extracting weather data...
+--- WEATHER DATA ---
+Location:           Sultan Abdul Aziz Shah-Subang
+State:              Kuala Lumpur
+Country:            Malaysia
+Current Time:       13 Dis 2025, 15:00:02.
+Latest Report:      13 Dis 2025, 14:00.
+Current Temp:       32
+Feels Like:         37
+Forecast High:      31
+Forecast Low:       24
+Humidity:           59%
+[✓] Weather data inserted successfully.
+[✓] Temporary MySQL config deleted.
+[+] Extracting weather data...
+--- WEATHER DATA ---
+Location:           Sultan Abdul Aziz Shah-Subang
+State:              Kuala Lumpur
+Country:            Malaysia
+Current Time:       13 Dis 2025, 16:00:02.
+Latest Report:      13 Dis 2025, 15:00.
+Current Temp:       32
+Feels Like:         37
+Forecast High:      31
+Forecast Low:       24
+Humidity:           59%
+[✓] Weather data inserted successfully.
+[✓] Temporary MySQL config deleted.
+[+] Extracting weather data...
+--- WEATHER DATA ---
+Location:           Sultan Abdul Aziz Shah-Subang
+State:              Kuala Lumpur
+Country:            Malaysia
+Current Time:       13 Dis 2025, 19:00:02.
+Latest Report:      13 Dis 2025, 18:00.
+Current Temp:       25
+Feels Like:         26
+Forecast High:      30
+Forecast Low:       23
+Humidity:           89%
+[✓] Weather data inserted successfully.
+[✓] Temporary MySQL config deleted.
+[+] Extracting weather data...
+--- WEATHER DATA ---
+Location:           Sultan Abdul Aziz Shah-Subang
+State:              Kuala Lumpur
+Country:            Malaysia
+Current Time:       13 Dis 2025, 20:00:01.
+Latest Report:      13 Dis 2025, 19:00.
+Current Temp:       25
+Feels Like:         26
+Forecast High:      30
+Forecast Low:       23
+Humidity:           94%
+[✓] Weather data inserted successfully.
+[✓] Temporary MySQL config deleted.
+[+] Extracting weather data...
+--- WEATHER DATA ---
+Location:           Sultan Abdul Aziz Shah-Subang
+State:              Kuala Lumpur
+Country:            Malaysia
+Current Time:       13 Dis 2025, 21:00:02.
+Latest Report:      13 Dis 2025, 20:31.
+Current Temp:       25
+Feels Like:         26
+Forecast High:      30
+Forecast Low:       23
+Humidity:           89%
+[✓] Weather data inserted successfully.
+[✓] Temporary MySQL config deleted.
+[+] Extracting weather data...
+--- WEATHER DATA ---
+Location:           Sultan Abdul Aziz Shah-Subang
+State:              Kuala Lumpur
+Country:            Malaysia
+Current Time:       13 Dis 2025, 23:00:03.
+Latest Report:      13 Dis 2025, 22:00.
+Current Temp:       25
+Feels Like:         26
+Forecast High:      30
+Forecast Low:       23
+Humidity:           94%
+[✓] Weather data inserted successfully.
+[✓] Temporary MySQL config deleted.
+[+] Extracting weather data...
+--- WEATHER DATA ---
+Location:           Sultan Abdul Aziz Shah-Subang
+State:              Kuala Lumpur
+Country:            Malaysia
+Current Time:       14 Dis 2025, 0:00:03.
+Latest Report:      13 Dis 2025, 23:00.
+Current Temp:       25
+Feels Like:         26
+Forecast High:      30
+Forecast Low:       23
+Humidity:           94%
+[✓] Weather data inserted successfully.
+[✓] Temporary MySQL config deleted.
+[+] Extracting weather data...
+--- WEATHER DATA ---
+Location:           Sultan Abdul Aziz Shah-Subang
+State:              Kuala Lumpur
+Country:            Malaysia
+Current Time:       14 Dis 2025, 1:00:03.
+Latest Report:      14 Dis 2025, 0:00.
+Current Temp:       25
+Feels Like:         26
+Forecast High:      29
+Forecast Low:       24
+Humidity:           94%
+[✓] Weather data inserted successfully.
+[✓] Temporary MySQL config deleted.
+[+] Extracting weather data...
+--- WEATHER DATA ---
+Location:           Sultan Abdul Aziz Shah-Subang
+State:              Kuala Lumpur
+Country:            Malaysia
+Current Time:       14 Dis 2025, 2:00:03.
+Latest Report:      14 Dis 2025, 1:00.
+Current Temp:       25
+Feels Like:         26
+Forecast High:      29
+Forecast Low:       24
+Humidity:           94%
+[✓] Weather data inserted successfully.
+[✓] Temporary MySQL config deleted.
